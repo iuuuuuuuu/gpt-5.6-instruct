@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="360" viewBox="0 0 900 360" role="img" aria-labelledby="title desc">
+  <title id="title">破甲</title>
+  <desc id="desc">破甲二字冲破束缚环，伴随斜向裂痕、速度线和飞散碎片</desc>
+  <defs>
+    <linearGradient id="power-gradient" x1="76" y1="304" x2="836" y2="54" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#a020f0"/>
+      <stop offset="0.48" stop-color="#168df0"/>
+      <stop offset="1" stop-color="#9f23ef"/>
+    </linearGradient>
+    <linearGradient id="slash-gradient" x1="332" y1="310" x2="590" y2="42" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6d28d9"/>
+      <stop offset="0.52" stop-color="#0ea5e9"/>
+      <stop offset="1" stop-color="#c026d3"/>
+    </linearGradient>
+    <filter id="power-glow" x="-20%" y="-35%" width="150%" height="180%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="
+        1 0 0 0 0.30
+        0 1 0 0 0.42
+        0 0 1 0 0.95
+        0 0 0 0.24 0" result="glow"/>
+      <feMerge>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Speed lines: forward momentum before the impact. -->
+  <g fill="none" stroke="url(#power-gradient)" stroke-linecap="round" opacity="0.72">
+    <path d="M66 132H174" stroke-width="11"/>
+    <path d="M42 174H146" stroke-width="8"/>
+    <path d="M74 216H164" stroke-width="6"/>
+  </g>
+
+  <!-- A containment ring split open at the upper right. -->
+  <g fill="none" stroke="url(#power-gradient)" stroke-linecap="round" stroke-linejoin="round" filter="url(#power-glow)">
+    <path d="M118 238C83 133 190 63 353 55C502 47 645 91 746 165" stroke-width="20"/>
+    <path d="M114 241C217 318 414 327 586 267C688 231 755 185 814 121" stroke-width="20"/>
+    <path d="M774 154L822 105" stroke-width="10"/>
+  </g>
+
+  <!-- Diagonal breach through the armor. -->
+  <path d="M334 307L532 52" fill="none" stroke="#ffffff" stroke-width="38" stroke-linecap="square"/>
+  <path d="M342 307L540 52" fill="none" stroke="url(#slash-gradient)" stroke-width="19" stroke-linecap="square" filter="url(#power-glow)"/>
+  <path d="M322 306L356 278L347 320Z" fill="url(#slash-gradient)"/>
+
+  <!-- Shards escaping through the broken boundary. -->
+  <g fill="url(#power-gradient)" filter="url(#power-glow)">
+    <path d="M786 83L824 50L817 93Z"/>
+    <path d="M833 103L866 87L847 120Z"/>
+    <path d="M800 119L829 111L815 139Z"/>
+    <path d="M755 73L777 48L780 83Z" opacity="0.78"/>
+  </g>
+
+  <!-- Heavy, forward-leaning wordmark. -->
+  <g transform="translate(448 231) skewX(-9)">
+    <text
+      x="0"
+      y="0"
+      fill="url(#power-gradient)"
+      stroke="#ffffff"
+      stroke-width="11"
+      paint-order="stroke fill"
+      font-family="PingFang SC, Noto Sans CJK SC, Source Han Sans SC, Microsoft YaHei, sans-serif"
+      font-size="166"
+      font-weight="900"
+      letter-spacing="-12"
+      text-anchor="middle"
+    >破甲</text>
+  </g>
+</svg>
