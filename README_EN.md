@@ -1,6 +1,11 @@
 <div align="center">
 
-<img src="docs/images/gpt-5.6-instruct-hero-optimized.png" alt="gpt-5.6-instruct project banner" width="720" />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/gpt-5.6-instruct-hero-dark.webp" />
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/gpt-5.6-instruct-hero-light.webp" />
+  <img src="docs/images/gpt-5.6-instruct-hero-light.webp" alt="gpt-5.6-instruct project banner" width="70%" />
+</picture><br />
+<img src="docs/images/readme-spacer.png" alt="" width="1" height="5" />
 
 <p>
   <a href="https://github.com/MDX-Tom/gpt-5.6-instruct/stargazers"><img src="https://img.shields.io/github/stars/MDX-Tom/gpt-5.6-instruct?logo=github&label=Stars" alt="GitHub Stars" /></a>
