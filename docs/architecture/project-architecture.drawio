@@ -1,206 +1,355 @@
-<mxfile host="Electron" agent="draw.io" version="30.4.1" pages="2">
+<mxfile host="Electron" agent="draw.io" pages="2">
   <diagram id="architecture-zh" name="中文">
-    <mxGraphModel dx="1600" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0" background="#FFFFFF">
+    <mxGraphModel dx="1388" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" background="#FFFFFF" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="zh-kicker" value="GPT-5.6-SOL  //  PROMPT SYSTEM" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=13;spacing=6;" vertex="1" parent="1">
-          <mxGeometry x="60" y="38" width="285" height="34" as="geometry" />
+        <mxCell id="zh-title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=38;" value="破甲提示词系统架构" vertex="1">
+          <mxGeometry height="58" width="650" x="45" y="80" as="geometry" />
         </mxCell>
-        <mxCell id="zh-title" value="破甲提示词系统架构" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=38;" vertex="1" parent="1">
-          <mxGeometry x="60" y="78" width="650" height="58" as="geometry" />
+        <mxCell id="zh-panel-a" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=92;strokeColor=#222222;strokeWidth=3;" value="" vertex="1">
+          <mxGeometry height="530" width="565" x="45" y="153" as="geometry" />
         </mxCell>
-        <mxCell id="zh-subtitle" value="从真实失败样例到可核验输出的持续优化闭环" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#222222;fontFamily=Helvetica;fontSize=17;" vertex="1" parent="1">
-          <mxGeometry x="62" y="130" width="650" height="32" as="geometry" />
+        <mxCell id="zh-panel-a-accent" parent="1" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fillColor=#222222;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="5" width="82" x="88" y="173" as="geometry" />
         </mxCell>
-        <mxCell id="zh-version" value="CURRENT RELEASE&lt;br&gt;&lt;font style=&quot;font-size: 22px;&quot;&gt;&lt;b&gt;v41&lt;/b&gt;&lt;/font&gt;" style="rounded=1;arcSize=18;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=11;align=center;verticalAlign=middle;shadow=0;" vertex="1" parent="1">
-          <mxGeometry x="1370" y="55" width="165" height="78" as="geometry" />
+        <mxCell id="zh-panel-a-title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=22;" value="01  持续迭代" vertex="1">
+          <mxGeometry height="36" width="230" x="85" y="185" as="geometry" />
         </mxCell>
-
-        <mxCell id="zh-panel-a" value="" style="rounded=1;arcSize=16;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=92;strokeColor=#222222;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="55" y="190" width="570" height="570" as="geometry" />
+        <mxCell id="zh-panel-a-sub" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;fontColor=#222222;fontFamily=Helvetica;fontStyle=1;fontSize=11;" value="CONTINUOUS OPTIMIZATION" vertex="1">
+          <mxGeometry height="28" width="240" x="340" y="189" as="geometry" />
         </mxCell>
-        <mxCell id="zh-panel-a-accent" value="" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fillColor=#222222;strokeColor=none;" vertex="1" parent="1">
-          <mxGeometry x="82" y="210" width="82" height="5" as="geometry" />
+        <mxCell id="zh-input-user" parent="1" style="rounded=1;arcSize=30;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=15;shadow=0;strokeWidth=2;" value="用户指令" vertex="1">
+          <mxGeometry height="48" width="145" x="72" y="237" as="geometry" />
         </mxCell>
-        <mxCell id="zh-panel-a-title" value="01  持续迭代" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=22;" vertex="1" parent="1">
-          <mxGeometry x="82" y="222" width="230" height="36" as="geometry" />
+        <mxCell id="zh-input-fail" parent="1" style="rounded=1;arcSize=30;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=15;shadow=0;strokeWidth=2;" value="真实失败" vertex="1">
+          <mxGeometry height="48" width="145" x="257" y="237" as="geometry" />
         </mxCell>
-        <mxCell id="zh-panel-a-sub" value="CONTINUOUS OPTIMIZATION" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;fontColor=#222222;fontFamily=Helvetica;fontStyle=1;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="350" y="226" width="240" height="28" as="geometry" />
+        <mxCell id="zh-input-issue" parent="1" style="rounded=1;arcSize=30;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=15;shadow=0;strokeWidth=2;" value="GitHub Issues" vertex="1">
+          <mxGeometry height="48" width="145" x="442" y="237" as="geometry" />
         </mxCell>
-
-        <mxCell id="zh-input-user" value="用户指令" style="rounded=1;arcSize=30;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=15;shadow=0;" vertex="1" parent="1">
-          <mxGeometry x="82" y="280" width="145" height="48" as="geometry" />
+        <mxCell id="zh-testbank" parent="1" style="rounded=1;arcSize=16;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#222222;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=16;spacing=10;shadow=0;" value="&lt;b&gt;双语测试集&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#222222&quot;&gt;中英文等价任务 · 多轮上下文 · 工件检查&lt;/font&gt;" vertex="1">
+          <mxGeometry height="74" width="460" x="100" y="327" as="geometry" />
         </mxCell>
-        <mxCell id="zh-input-fail" value="真实失败" style="rounded=1;arcSize=30;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=15;shadow=0;" vertex="1" parent="1">
-          <mxGeometry x="267" y="280" width="145" height="48" as="geometry" />
+        <mxCell id="zh-optimize" parent="1" style="rounded=1;arcSize=16;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#222222;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=16;spacing=10;shadow=0;" value="&lt;b&gt;失败归因与提示词优化&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;归纳意图族 · 收敛规则层级 · 避免单例过拟合&lt;/font&gt;" vertex="1">
+          <mxGeometry height="74" width="460" x="100" y="432" as="geometry" />
         </mxCell>
-        <mxCell id="zh-input-issue" value="GitHub Issues" style="rounded=1;arcSize=30;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=15;shadow=0;" vertex="1" parent="1">
-          <mxGeometry x="452" y="280" width="145" height="48" as="geometry" />
+        <mxCell id="zh-regression" parent="1" style="rounded=1;arcSize=16;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#222222;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=16;spacing=10;shadow=0;" value="&lt;b&gt;分层回归&lt;/b&gt;   &lt;font color=&quot;#111111&quot;&gt;LOW  →  MEDIUM  →  HIGH&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#222222&quot;&gt;断点续测 · 跨轮一致性 · 原始输出留档&lt;/font&gt;" vertex="1">
+          <mxGeometry height="76" width="460" x="100" y="537" as="geometry" />
         </mxCell>
-
-        <mxCell id="zh-testbank" value="&lt;b&gt;双语测试集&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#222222&quot;&gt;中英文等价任务 · 多轮上下文 · 工件检查&lt;/font&gt;" style="rounded=1;arcSize=16;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#222222;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=16;spacing=10;shadow=0;" vertex="1" parent="1">
-          <mxGeometry x="110" y="370" width="460" height="74" as="geometry" />
-        </mxCell>
-        <mxCell id="zh-optimize" value="&lt;b&gt;失败归因与提示词优化&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;归纳意图族 · 收敛规则层级 · 避免单例过拟合&lt;/font&gt;" style="rounded=1;arcSize=16;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#222222;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=16;spacing=10;shadow=0;" vertex="1" parent="1">
-          <mxGeometry x="110" y="475" width="460" height="74" as="geometry" />
-        </mxCell>
-        <mxCell id="zh-regression" value="&lt;b&gt;分层回归&lt;/b&gt;   &lt;font color=&quot;#111111&quot;&gt;LOW  →  MEDIUM  →  HIGH&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#222222&quot;&gt;断点续测 · 跨轮一致性 · 原始输出留档&lt;/font&gt;" style="rounded=1;arcSize=16;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#222222;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=16;spacing=10;shadow=0;" vertex="1" parent="1">
-          <mxGeometry x="110" y="580" width="460" height="76" as="geometry" />
-        </mxCell>
-        <mxCell id="zh-fail-loop" value="失败样例回流" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#222222;strokeWidth=2;dashed=1;dashPattern=6 4;endArrow=block;endFill=1;fontColor=#111111;fontFamily=Helvetica;fontSize=12;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="zh-regression" target="zh-testbank">
+        <mxCell id="zh-fail-loop" edge="1" parent="1" source="zh-regression" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;fontColor=#111111;fontFamily=Helvetica;fontSize=12;labelBackgroundColor=#FFFFFF;fontStyle=1;textDirection=vertical-lr;" target="zh-testbank" value="失败样例回流">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="88" y="618" />
-              <mxPoint x="88" y="407" />
+              <mxPoint x="78" y="575" />
+              <mxPoint x="78" y="364" />
             </Array>
           </mxGeometry>
         </mxCell>
-
-        <mxCell id="zh-panel-b" value="" style="rounded=1;arcSize=16;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=94;strokeColor=#222222;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="650" y="190" width="300" height="570" as="geometry" />
+        <mxCell id="zh-panel-b" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=94;strokeColor=#222222;strokeWidth=3;" value="" vertex="1">
+          <mxGeometry height="530" width="300" x="650" y="153" as="geometry" />
         </mxCell>
-        <mxCell id="zh-panel-b-accent" value="" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fillColor=#222222;strokeColor=none;" vertex="1" parent="1">
-          <mxGeometry x="675" y="210" width="82" height="5" as="geometry" />
+        <mxCell id="zh-panel-b-accent" parent="1" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fillColor=#222222;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="5" width="82" x="675" y="173" as="geometry" />
         </mxCell>
-        <mxCell id="zh-panel-b-title" value="02  发布门禁" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=22;" vertex="1" parent="1">
-          <mxGeometry x="675" y="222" width="220" height="36" as="geometry" />
+        <mxCell id="zh-panel-b-title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=22;" value="02  发布门禁" vertex="1">
+          <mxGeometry height="36" width="220" x="675" y="185" as="geometry" />
         </mxCell>
-        <mxCell id="zh-candidate" value="CANDIDATE&lt;br&gt;&lt;font style=&quot;font-size: 24px;&quot;&gt;&lt;b&gt;v41&lt;/b&gt;&lt;/font&gt;" style="rounded=1;arcSize=18;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=11;shadow=0;" vertex="1" parent="1">
-          <mxGeometry x="690" y="280" width="220" height="82" as="geometry" />
+        <mxCell id="zh-candidate" parent="1" style="rounded=1;arcSize=18;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=11;shadow=0;" value="&lt;font style=&quot;font-size: 13px;&quot;&gt;CANDIDATE&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size: 23px;&quot;&gt;&lt;b style=&quot;&quot;&gt;v41&lt;/b&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="220" x="690" y="237" as="geometry" />
         </mxCell>
-        <mxCell id="zh-gate-1" value="✓  120-case 基准集" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=14;align=left;spacingLeft=18;shadow=0;" vertex="1" parent="1">
-          <mxGeometry x="690" y="400" width="220" height="52" as="geometry" />
+        <mxCell id="zh-gate-1" parent="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=14;align=left;spacingLeft=18;shadow=0;strokeWidth=2;" value="✓  120-case 基准集" vertex="1">
+          <mxGeometry height="52" width="220" x="690" y="327" as="geometry" />
         </mxCell>
-        <mxCell id="zh-gate-2" value="✓  专项回归集" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=14;align=left;spacingLeft=18;shadow=0;" vertex="1" parent="1">
-          <mxGeometry x="690" y="474" width="220" height="52" as="geometry" />
+        <mxCell id="zh-gate-2" parent="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=14;align=left;spacingLeft=18;shadow=0;strokeWidth=2;" value="✓  专项回归集" vertex="1">
+          <mxGeometry height="52" width="220" x="690" y="410" as="geometry" />
         </mxCell>
-        <mxCell id="zh-gate-3" value="✓  工件与证据校验" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=14;align=left;spacingLeft=18;shadow=0;" vertex="1" parent="1">
-          <mxGeometry x="690" y="548" width="220" height="52" as="geometry" />
+        <mxCell id="zh-gate-3" parent="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=14;align=left;spacingLeft=18;shadow=0;strokeWidth=2;" value="✓  工件与证据校验" vertex="1">
+          <mxGeometry height="52" width="220" x="690" y="495" as="geometry" />
         </mxCell>
-        <mxCell id="zh-approved" value="●  APPROVED&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;&lt;b&gt;发布 v41&lt;/b&gt;&lt;/font&gt;" style="rounded=1;arcSize=18;whiteSpace=wrap;html=1;fillColor=#FFF4E9;strokeColor=#222222;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=14;shadow=0;" vertex="1" parent="1">
-          <mxGeometry x="690" y="640" width="220" height="78" as="geometry" />
+        <mxCell id="zh-approved" parent="1" style="rounded=1;arcSize=18;whiteSpace=wrap;html=1;fillColor=#FFF4E9;strokeColor=#222222;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=14;shadow=0;" value="●  APPROVED&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;&lt;b&gt;发布 v41&lt;/b&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="220" x="690" y="580" as="geometry" />
         </mxCell>
-
-        <mxCell id="zh-panel-c" value="" style="rounded=1;arcSize=16;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=92;strokeColor=#222222;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="975" y="190" width="570" height="570" as="geometry" />
+        <mxCell id="zh-panel-c" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=#222222;strokeWidth=3;" value="" vertex="1">
+          <mxGeometry height="530" width="555" x="990" y="153" as="geometry" />
         </mxCell>
-        <mxCell id="zh-panel-c-accent" value="" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fillColor=#222222;strokeColor=none;" vertex="1" parent="1">
-          <mxGeometry x="1002" y="210" width="82" height="5" as="geometry" />
+        <mxCell id="zh-panel-c-accent" parent="1" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fillColor=#222222;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="5" width="82" x="1015" y="173" as="geometry" />
         </mxCell>
-        <mxCell id="zh-panel-c-title" value="03  生产运行" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=22;" vertex="1" parent="1">
-          <mxGeometry x="1002" y="222" width="230" height="36" as="geometry" />
+        <mxCell id="zh-panel-c-title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=22;" value="03  生产运行" vertex="1">
+          <mxGeometry height="36" width="230" x="1009" y="185" as="geometry" />
         </mxCell>
-        <mxCell id="zh-panel-c-sub" value="CODEX CLI RUNTIME" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;fontColor=#222222;fontFamily=Helvetica;fontStyle=1;fontSize=11;" vertex="1" parent="1">
-          <mxGeometry x="1285" y="226" width="220" height="28" as="geometry" />
+        <mxCell id="zh-panel-c-sub" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;fontColor=#222222;fontFamily=Helvetica;fontStyle=1;fontSize=11;" value="CODEX CLI RUNTIME" vertex="1">
+          <mxGeometry height="28" width="220" x="1285" y="189" as="geometry" />
         </mxCell>
-        <mxCell id="zh-deploy" value="&lt;b&gt;部署加载&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;v41 ZIP  →  codex-instruct.py  →  Codex 配置&lt;/font&gt;" style="rounded=1;arcSize=16;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=15;spacing=8;shadow=0;" vertex="1" parent="1">
-          <mxGeometry x="1015" y="280" width="490" height="72" as="geometry" />
+        <mxCell id="zh-deploy" parent="1" style="rounded=1;arcSize=16;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=15;spacing=8;shadow=0;" value="&lt;b&gt;部署加载&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;v41 ZIP  →  codex-instruct.py  →  Codex 配置&lt;/font&gt;" vertex="1">
+          <mxGeometry height="72" width="490" x="1020" y="237" as="geometry" />
         </mxCell>
-        <mxCell id="zh-runtime-1" value="01&lt;br&gt;&lt;b&gt;首轮归一化&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;名称 · 网址 · 身份 · 属性&lt;/font&gt;" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontSize=13;shadow=0;" vertex="1" parent="1">
-          <mxGeometry x="1015" y="390" width="150" height="88" as="geometry" />
+        <mxCell id="zh-runtime-1" parent="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontSize=13;shadow=0;strokeWidth=2;" value="01&lt;br&gt;&lt;b&gt;首轮归一化&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;名称 · 网址 · 身份 · 属性&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="150" x="1020" y="347" as="geometry" />
         </mxCell>
-        <mxCell id="zh-runtime-2" value="02&lt;br&gt;&lt;b&gt;语义分派&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;完整动词链 · 中英改写&lt;/font&gt;" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontSize=13;shadow=0;" vertex="1" parent="1">
-          <mxGeometry x="1185" y="390" width="150" height="88" as="geometry" />
+        <mxCell id="zh-runtime-2" parent="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontSize=13;shadow=0;strokeWidth=2;" value="02&lt;br&gt;&lt;b&gt;语义分派&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;完整动词链 · 中英改写&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="150" x="1190" y="347" as="geometry" />
         </mxCell>
-        <mxCell id="zh-runtime-3" value="03&lt;br&gt;&lt;b&gt;意图族路由&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;软件 · 安全 · 研究 · Agent&lt;/font&gt;" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontSize=13;shadow=0;" vertex="1" parent="1">
-          <mxGeometry x="1355" y="390" width="150" height="88" as="geometry" />
+        <mxCell id="zh-runtime-3" parent="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontSize=13;shadow=0;strokeWidth=2;" value="03&lt;br&gt;&lt;b&gt;意图族路由&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;软件 · 安全 · 研究 · Agent&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="150" x="1360" y="347" as="geometry" />
         </mxCell>
-        <mxCell id="zh-runtime-4" value="04&lt;br&gt;&lt;b&gt;状态连续性&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;复用状态 · 恢复错误分支&lt;/font&gt;" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontSize=13;shadow=0;" vertex="1" parent="1">
-          <mxGeometry x="1100" y="515" width="185" height="88" as="geometry" />
+        <mxCell id="zh-runtime-4" parent="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontSize=13;shadow=0;strokeWidth=2;" value="04&lt;br&gt;&lt;b&gt;状态连续性&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;复用状态 · 恢复错误分支&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="185" x="1051" y="472" as="geometry" />
         </mxCell>
-        <mxCell id="zh-runtime-5" value="05&lt;br&gt;&lt;b&gt;真实工件验证&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;文件 · 路径 · 签名 · 回滚&lt;/font&gt;" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontSize=13;shadow=0;" vertex="1" parent="1">
-          <mxGeometry x="1300" y="515" width="185" height="88" as="geometry" />
+        <mxCell id="zh-runtime-5" parent="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontSize=13;shadow=0;strokeWidth=2;" value="05&lt;br&gt;&lt;b&gt;真实工件验证&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;文件 · 路径 · 签名 · 回滚&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="185" x="1296" y="472" as="geometry" />
         </mxCell>
-        <mxCell id="zh-engine" value="&lt;b&gt;gpt-5.6-sol&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;加载 v41 后执行&lt;/font&gt;" style="rounded=1;arcSize=18;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#111111;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=17;shadow=0;" vertex="1" parent="1">
-          <mxGeometry x="1035" y="650" width="205" height="70" as="geometry" />
+        <mxCell id="zh-engine" parent="1" style="rounded=1;arcSize=18;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#111111;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=17;shadow=0;" value="&lt;b&gt;gpt-5.6-sol&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;加载 v41 后执行&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="185" x="1050" y="587" as="geometry" />
         </mxCell>
-        <mxCell id="zh-output" value="&lt;b&gt;可核验结果&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;步骤 · 代码 · 文本 · 真实文件&lt;/font&gt;" style="rounded=1;arcSize=18;whiteSpace=wrap;html=1;fillColor=#FFF4E9;strokeColor=#222222;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=15;shadow=0;" vertex="1" parent="1">
-          <mxGeometry x="1290" y="650" width="205" height="70" as="geometry" />
+        <mxCell id="zh-output" parent="1" style="rounded=1;arcSize=18;whiteSpace=wrap;html=1;fillColor=#FFF4E9;strokeColor=#222222;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=15;shadow=0;" value="&lt;b&gt;可核验结果&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;步骤 · 代码 · 文本 · 真实文件&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="200" x="1295" y="587" as="geometry" />
         </mxCell>
-
-        <mxCell id="zh-e-input-test" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1" source="zh-input-fail" target="zh-testbank"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="zh-e-test-opt" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1" source="zh-testbank" target="zh-optimize"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="zh-e-opt-reg" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1" source="zh-optimize" target="zh-regression"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="zh-e-reg-candidate" value="通过" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=12;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="zh-regression" target="zh-candidate"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="638" y="618" /><mxPoint x="638" y="321" /></Array></mxGeometry></mxCell>
-        <mxCell id="zh-e-cand-g1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1" source="zh-candidate" target="zh-gate-1"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="zh-e-g1-g2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1" source="zh-gate-1" target="zh-gate-2"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="zh-e-g2-g3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1" source="zh-gate-2" target="zh-gate-3"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="zh-e-g3-app" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1" source="zh-gate-3" target="zh-approved"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="zh-e-app-deploy" value="发布" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=3;endArrow=block;endFill=1;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=12;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="zh-approved" target="zh-deploy"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="960" y="679" /><mxPoint x="960" y="316" /></Array></mxGeometry></mxCell>
-        <mxCell id="zh-e-deploy-r1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1" source="zh-deploy" target="zh-runtime-1"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="zh-e-r1-r2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1" source="zh-runtime-1" target="zh-runtime-2"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="zh-e-r2-r3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1" source="zh-runtime-2" target="zh-runtime-3"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="zh-e-r3-r4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1" source="zh-runtime-3" target="zh-runtime-4"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1430" y="497" /><mxPoint x="1192" y="497" /></Array></mxGeometry></mxCell>
-        <mxCell id="zh-e-r4-r5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1" source="zh-runtime-4" target="zh-runtime-5"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="zh-e-r5-engine" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1" source="zh-runtime-5" target="zh-engine"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1392" y="625" /><mxPoint x="1138" y="625" /></Array></mxGeometry></mxCell>
-        <mxCell id="zh-e-engine-output" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=3;endArrow=block;endFill=1;" edge="1" parent="1" source="zh-engine" target="zh-output"><mxGeometry relative="1" as="geometry" /></mxCell>
-
+        <mxCell id="zh-e-input-test" edge="1" parent="1" source="zh-input-fail" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" target="zh-testbank" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zh-e-test-opt" edge="1" parent="1" source="zh-testbank" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" target="zh-optimize" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zh-e-opt-reg" edge="1" parent="1" source="zh-optimize" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" target="zh-regression" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zh-e-reg-candidate" edge="1" parent="1" source="zh-regression" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=3;endArrow=block;endFill=1;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=12;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="zh-candidate" value="通过">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="630.05" y="575" />
+              <mxPoint x="630.05" y="267" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="zh-e-cand-g1" edge="1" parent="1" source="zh-candidate" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" target="zh-gate-1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zh-e-g1-g2" edge="1" parent="1" source="zh-gate-1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" target="zh-gate-2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zh-e-g2-g3" edge="1" parent="1" source="zh-gate-2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" target="zh-gate-3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zh-e-g3-app" edge="1" parent="1" source="zh-gate-3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" target="zh-approved" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zh-e-app-deploy" edge="1" parent="1" source="zh-approved" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=3;endArrow=block;endFill=1;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=12;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="zh-deploy" value="发布">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="970" y="610" />
+              <mxPoint x="970" y="273" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="zh-e-deploy-r1" edge="1" parent="1" source="zh-deploy" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" target="zh-runtime-1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zh-e-r1-r2" edge="1" parent="1" source="zh-runtime-1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" target="zh-runtime-2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zh-e-r2-r3" edge="1" parent="1" source="zh-runtime-2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" target="zh-runtime-3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zh-e-r3-r4" edge="1" parent="1" source="zh-runtime-3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="zh-runtime-4" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1435" y="447" />
+              <mxPoint x="1143.5" y="447" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="zh-e-r4-r5" edge="1" parent="1" source="zh-runtime-4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" target="zh-runtime-5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zh-e-r5-engine" edge="1" parent="1" source="zh-runtime-5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" target="zh-engine" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1397" y="567" />
+              <mxPoint x="1143" y="567" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="zh-e-engine-output" edge="1" parent="1" source="zh-engine" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=3;endArrow=block;endFill=1;" target="zh-output" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
   <diagram id="architecture-en" name="English">
-    <mxGraphModel dx="1600" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0" background="#FFFFFF">
+    <mxGraphModel dx="1388" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" background="#FFFFFF" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="en-kicker" value="GPT-5.6-SOL  //  PROMPT SYSTEM" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=13;spacing=6;" vertex="1" parent="1"><mxGeometry x="60" y="38" width="285" height="34" as="geometry" /></mxCell>
-        <mxCell id="en-title" value="Armor-Breaking Prompt Architecture" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=38;" vertex="1" parent="1"><mxGeometry x="60" y="78" width="850" height="58" as="geometry" /></mxCell>
-        <mxCell id="en-subtitle" value="A continuous optimization loop from real failures to verifiable outputs" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontColor=#222222;fontFamily=Helvetica;fontSize=17;" vertex="1" parent="1"><mxGeometry x="62" y="130" width="760" height="32" as="geometry" /></mxCell>
-        <mxCell id="en-version" value="CURRENT RELEASE&lt;br&gt;&lt;font style=&quot;font-size: 22px;&quot;&gt;&lt;b&gt;v41&lt;/b&gt;&lt;/font&gt;" style="rounded=1;arcSize=18;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=11;align=center;verticalAlign=middle;shadow=0;" vertex="1" parent="1"><mxGeometry x="1370" y="55" width="165" height="78" as="geometry" /></mxCell>
-
-        <mxCell id="en-panel-a" value="" style="rounded=1;arcSize=16;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=92;strokeColor=#222222;strokeWidth=2;" vertex="1" parent="1"><mxGeometry x="55" y="190" width="570" height="570" as="geometry" /></mxCell>
-        <mxCell id="en-panel-a-accent" value="" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fillColor=#222222;strokeColor=none;" vertex="1" parent="1"><mxGeometry x="82" y="210" width="82" height="5" as="geometry" /></mxCell>
-        <mxCell id="en-panel-a-title" value="01  CONTINUOUS OPTIMIZATION" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=20;" vertex="1" parent="1"><mxGeometry x="82" y="222" width="400" height="36" as="geometry" /></mxCell>
-        <mxCell id="en-panel-a-sub" value="ITERATE" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;fontColor=#222222;fontFamily=Helvetica;fontStyle=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="470" y="226" width="120" height="28" as="geometry" /></mxCell>
-        <mxCell id="en-input-user" value="User Requests" style="rounded=1;arcSize=30;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=14;shadow=0;" vertex="1" parent="1"><mxGeometry x="82" y="280" width="145" height="48" as="geometry" /></mxCell>
-        <mxCell id="en-input-fail" value="Real Failures" style="rounded=1;arcSize=30;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=14;shadow=0;" vertex="1" parent="1"><mxGeometry x="267" y="280" width="145" height="48" as="geometry" /></mxCell>
-        <mxCell id="en-input-issue" value="GitHub Issues" style="rounded=1;arcSize=30;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=14;shadow=0;" vertex="1" parent="1"><mxGeometry x="452" y="280" width="145" height="48" as="geometry" /></mxCell>
-        <mxCell id="en-testbank" value="&lt;b&gt;Bilingual Test Bank&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#222222&quot;&gt;Equivalent tasks · multi-turn context · artifact checks&lt;/font&gt;" style="rounded=1;arcSize=16;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#222222;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=16;spacing=10;shadow=0;" vertex="1" parent="1"><mxGeometry x="110" y="370" width="460" height="74" as="geometry" /></mxCell>
-        <mxCell id="en-optimize" value="&lt;b&gt;Failure Analysis &amp; Prompt Optimization&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;Intent families · rule hierarchy · no single-case overfitting&lt;/font&gt;" style="rounded=1;arcSize=16;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#222222;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=16;spacing=10;shadow=0;" vertex="1" parent="1"><mxGeometry x="110" y="475" width="460" height="74" as="geometry" /></mxCell>
-        <mxCell id="en-regression" value="&lt;b&gt;Tiered Regression&lt;/b&gt;   &lt;font color=&quot;#111111&quot;&gt;LOW  →  MEDIUM  →  HIGH&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#222222&quot;&gt;Resume points · cross-turn consistency · raw evidence&lt;/font&gt;" style="rounded=1;arcSize=16;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#222222;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=16;spacing=10;shadow=0;" vertex="1" parent="1"><mxGeometry x="110" y="580" width="460" height="76" as="geometry" /></mxCell>
-        <mxCell id="en-fail-loop" value="Failed-case feedback" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#222222;strokeWidth=2;dashed=1;dashPattern=6 4;endArrow=block;endFill=1;fontColor=#111111;fontFamily=Helvetica;fontSize=12;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="en-regression" target="en-testbank"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="88" y="618" /><mxPoint x="88" y="407" /></Array></mxGeometry></mxCell>
-
-        <mxCell id="en-panel-b" value="" style="rounded=1;arcSize=16;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=94;strokeColor=#222222;strokeWidth=2;" vertex="1" parent="1"><mxGeometry x="650" y="190" width="300" height="570" as="geometry" /></mxCell>
-        <mxCell id="en-panel-b-accent" value="" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fillColor=#222222;strokeColor=none;" vertex="1" parent="1"><mxGeometry x="675" y="210" width="82" height="5" as="geometry" /></mxCell>
-        <mxCell id="en-panel-b-title" value="02  RELEASE GATE" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=21;" vertex="1" parent="1"><mxGeometry x="675" y="222" width="240" height="36" as="geometry" /></mxCell>
-        <mxCell id="en-candidate" value="CANDIDATE&lt;br&gt;&lt;font style=&quot;font-size: 24px;&quot;&gt;&lt;b&gt;v41&lt;/b&gt;&lt;/font&gt;" style="rounded=1;arcSize=18;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=11;shadow=0;" vertex="1" parent="1"><mxGeometry x="690" y="280" width="220" height="82" as="geometry" /></mxCell>
-        <mxCell id="en-gate-1" value="✓  120-case baseline" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=14;align=left;spacingLeft=18;shadow=0;" vertex="1" parent="1"><mxGeometry x="690" y="400" width="220" height="52" as="geometry" /></mxCell>
-        <mxCell id="en-gate-2" value="✓  Issue regression bank" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=14;align=left;spacingLeft=18;shadow=0;" vertex="1" parent="1"><mxGeometry x="690" y="474" width="220" height="52" as="geometry" /></mxCell>
-        <mxCell id="en-gate-3" value="✓  Artifact evidence" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=14;align=left;spacingLeft=18;shadow=0;" vertex="1" parent="1"><mxGeometry x="690" y="548" width="220" height="52" as="geometry" /></mxCell>
-        <mxCell id="en-approved" value="●  APPROVED&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;&lt;b&gt;Release v41&lt;/b&gt;&lt;/font&gt;" style="rounded=1;arcSize=18;whiteSpace=wrap;html=1;fillColor=#FFF4E9;strokeColor=#222222;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=14;shadow=0;" vertex="1" parent="1"><mxGeometry x="690" y="640" width="220" height="78" as="geometry" /></mxCell>
-
-        <mxCell id="en-panel-c" value="" style="rounded=1;arcSize=16;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=92;strokeColor=#222222;strokeWidth=2;" vertex="1" parent="1"><mxGeometry x="975" y="190" width="570" height="570" as="geometry" /></mxCell>
-        <mxCell id="en-panel-c-accent" value="" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fillColor=#222222;strokeColor=none;" vertex="1" parent="1"><mxGeometry x="1002" y="210" width="82" height="5" as="geometry" /></mxCell>
-        <mxCell id="en-panel-c-title" value="03  PRODUCTION RUNTIME" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=21;" vertex="1" parent="1"><mxGeometry x="1002" y="222" width="350" height="36" as="geometry" /></mxCell>
-        <mxCell id="en-panel-c-sub" value="CODEX CLI" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;fontColor=#222222;fontFamily=Helvetica;fontStyle=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="1385" y="226" width="120" height="28" as="geometry" /></mxCell>
-        <mxCell id="en-deploy" value="&lt;b&gt;Deploy &amp; Load&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;v41 ZIP  →  codex-instruct.py  →  Codex config&lt;/font&gt;" style="rounded=1;arcSize=16;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=15;spacing=8;shadow=0;" vertex="1" parent="1"><mxGeometry x="1015" y="280" width="490" height="72" as="geometry" /></mxCell>
-        <mxCell id="en-runtime-1" value="01&lt;br&gt;&lt;b&gt;Normalization&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;names · URLs · identities&lt;/font&gt;" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontSize=13;shadow=0;" vertex="1" parent="1"><mxGeometry x="1015" y="390" width="150" height="88" as="geometry" /></mxCell>
-        <mxCell id="en-runtime-2" value="02&lt;br&gt;&lt;b&gt;Semantic Dispatch&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;full verb chains&lt;/font&gt;" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontSize=13;shadow=0;" vertex="1" parent="1"><mxGeometry x="1185" y="390" width="150" height="88" as="geometry" /></mxCell>
-        <mxCell id="en-runtime-3" value="03&lt;br&gt;&lt;b&gt;Intent Routing&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;software · safety · agent&lt;/font&gt;" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontSize=13;shadow=0;" vertex="1" parent="1"><mxGeometry x="1355" y="390" width="150" height="88" as="geometry" /></mxCell>
-        <mxCell id="en-runtime-4" value="04&lt;br&gt;&lt;b&gt;State Continuity&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;reuse · progress · recovery&lt;/font&gt;" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontSize=13;shadow=0;" vertex="1" parent="1"><mxGeometry x="1100" y="515" width="185" height="88" as="geometry" /></mxCell>
-        <mxCell id="en-runtime-5" value="05&lt;br&gt;&lt;b&gt;Artifact Verification&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;files · paths · signatures&lt;/font&gt;" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontSize=13;shadow=0;" vertex="1" parent="1"><mxGeometry x="1300" y="515" width="185" height="88" as="geometry" /></mxCell>
-        <mxCell id="en-engine" value="&lt;b&gt;gpt-5.6-sol&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;Execute with v41&lt;/font&gt;" style="rounded=1;arcSize=18;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#111111;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=17;shadow=0;" vertex="1" parent="1"><mxGeometry x="1035" y="650" width="205" height="70" as="geometry" /></mxCell>
-        <mxCell id="en-output" value="&lt;b&gt;Verifiable Result&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;steps · code · text · files&lt;/font&gt;" style="rounded=1;arcSize=18;whiteSpace=wrap;html=1;fillColor=#FFF4E9;strokeColor=#222222;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=15;shadow=0;" vertex="1" parent="1"><mxGeometry x="1290" y="650" width="205" height="70" as="geometry" /></mxCell>
-
-        <mxCell id="en-e-input-test" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1" source="en-input-fail" target="en-testbank"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="en-e-test-opt" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1" source="en-testbank" target="en-optimize"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="en-e-opt-reg" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1" source="en-optimize" target="en-regression"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="en-e-reg-candidate" value="PASS" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=12;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="en-regression" target="en-candidate"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="638" y="618" /><mxPoint x="638" y="321" /></Array></mxGeometry></mxCell>
-        <mxCell id="en-e-cand-g1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1" source="en-candidate" target="en-gate-1"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="en-e-g1-g2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1" source="en-gate-1" target="en-gate-2"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="en-e-g2-g3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1" source="en-gate-2" target="en-gate-3"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="en-e-g3-app" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1" source="en-gate-3" target="en-approved"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="en-e-app-deploy" value="RELEASE" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=3;endArrow=block;endFill=1;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=12;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="en-approved" target="en-deploy"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="960" y="679" /><mxPoint x="960" y="316" /></Array></mxGeometry></mxCell>
-        <mxCell id="en-e-deploy-r1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1" source="en-deploy" target="en-runtime-1"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="en-e-r1-r2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1" source="en-runtime-1" target="en-runtime-2"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="en-e-r2-r3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1" source="en-runtime-2" target="en-runtime-3"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="en-e-r3-r4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1" source="en-runtime-3" target="en-runtime-4"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1430" y="497" /><mxPoint x="1192" y="497" /></Array></mxGeometry></mxCell>
-        <mxCell id="en-e-r4-r5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1" source="en-runtime-4" target="en-runtime-5"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="en-e-r5-engine" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" edge="1" parent="1" source="en-runtime-5" target="en-engine"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1392" y="625" /><mxPoint x="1138" y="625" /></Array></mxGeometry></mxCell>
-        <mxCell id="en-e-engine-output" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=3;endArrow=block;endFill=1;" edge="1" parent="1" source="en-engine" target="en-output"><mxGeometry relative="1" as="geometry" /></mxCell>
-
+        <mxCell id="en-title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=38;" value="Armor-Breaking Prompt Architecture" vertex="1">
+          <mxGeometry height="58" width="850" x="45" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="en-panel-a" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=92;strokeColor=#222222;strokeWidth=3;" value="" vertex="1">
+          <mxGeometry height="530" width="565" x="45" y="153" as="geometry" />
+        </mxCell>
+        <mxCell id="en-panel-a-accent" parent="1" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fillColor=#222222;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="5" width="82" x="88" y="173" as="geometry" />
+        </mxCell>
+        <mxCell id="en-panel-a-title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=20;" value="01  CONTINUOUS OPTIMIZATION" vertex="1">
+          <mxGeometry height="36" width="400" x="85" y="185" as="geometry" />
+        </mxCell>
+        <mxCell id="en-panel-a-sub" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;fontColor=#222222;fontFamily=Helvetica;fontStyle=1;fontSize=11;" value="ITERATE" vertex="1">
+          <mxGeometry height="28" width="120" x="470" y="189" as="geometry" />
+        </mxCell>
+        <mxCell id="en-input-user" parent="1" style="rounded=1;arcSize=30;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=14;shadow=0;strokeWidth=2;" value="User Requests" vertex="1">
+          <mxGeometry height="48" width="145" x="72" y="237" as="geometry" />
+        </mxCell>
+        <mxCell id="en-input-fail" parent="1" style="rounded=1;arcSize=30;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=14;shadow=0;strokeWidth=2;" value="Real Failures" vertex="1">
+          <mxGeometry height="48" width="145" x="257" y="237" as="geometry" />
+        </mxCell>
+        <mxCell id="en-input-issue" parent="1" style="rounded=1;arcSize=30;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=14;shadow=0;strokeWidth=2;" value="GitHub Issues" vertex="1">
+          <mxGeometry height="48" width="145" x="442" y="237" as="geometry" />
+        </mxCell>
+        <mxCell id="en-testbank" parent="1" style="rounded=1;arcSize=16;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#222222;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=16;spacing=10;shadow=0;" value="&lt;b&gt;Bilingual Test Bank&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#222222&quot;&gt;Equivalent tasks · multi-turn context · artifact checks&lt;/font&gt;" vertex="1">
+          <mxGeometry height="74" width="460" x="100" y="327" as="geometry" />
+        </mxCell>
+        <mxCell id="en-optimize" parent="1" style="rounded=1;arcSize=16;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#222222;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=16;spacing=10;shadow=0;" value="&lt;b&gt;Failure Analysis &amp; Prompt Optimization&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;Intent families · rule hierarchy · no single-case overfitting&lt;/font&gt;" vertex="1">
+          <mxGeometry height="74" width="460" x="100" y="432" as="geometry" />
+        </mxCell>
+        <mxCell id="en-regression" parent="1" style="rounded=1;arcSize=16;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#222222;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=16;spacing=10;shadow=0;" value="&lt;b&gt;Tiered Regression&lt;/b&gt;   &lt;font color=&quot;#111111&quot;&gt;LOW  →  MEDIUM  →  HIGH&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#222222&quot;&gt;Resume points · cross-turn consistency · raw evidence&lt;/font&gt;" vertex="1">
+          <mxGeometry height="76" width="460" x="100" y="537" as="geometry" />
+        </mxCell>
+        <mxCell id="en-fail-loop" edge="1" parent="1" source="en-regression" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;fontColor=#111111;fontFamily=Helvetica;fontSize=12;labelBackgroundColor=#FFFFFF;fontStyle=1;textDirection=vertical-lr;" target="en-testbank" value="Failed-case feedback">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="78" y="575" />
+              <mxPoint x="78" y="364" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="en-panel-b" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=94;strokeColor=#222222;strokeWidth=3;" value="" vertex="1">
+          <mxGeometry height="530" width="300" x="650" y="153" as="geometry" />
+        </mxCell>
+        <mxCell id="en-panel-b-accent" parent="1" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fillColor=#222222;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="5" width="82" x="675" y="173" as="geometry" />
+        </mxCell>
+        <mxCell id="en-panel-b-title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=21;" value="02  RELEASE GATE" vertex="1">
+          <mxGeometry height="36" width="240" x="675" y="185" as="geometry" />
+        </mxCell>
+        <mxCell id="en-candidate" parent="1" style="rounded=1;arcSize=18;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=11;shadow=0;" value="&lt;font style=&quot;font-size: 13px;&quot;&gt;CANDIDATE&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size: 23px;&quot;&gt;&lt;b&gt;v41&lt;/b&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="220" x="690" y="237" as="geometry" />
+        </mxCell>
+        <mxCell id="en-gate-1" parent="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=14;align=left;spacingLeft=18;shadow=0;strokeWidth=2;" value="✓  120-case baseline" vertex="1">
+          <mxGeometry height="52" width="220" x="690" y="327" as="geometry" />
+        </mxCell>
+        <mxCell id="en-gate-2" parent="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=14;align=left;spacingLeft=18;shadow=0;strokeWidth=2;" value="✓  Issue regression bank" vertex="1">
+          <mxGeometry height="52" width="220" x="690" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="en-gate-3" parent="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=14;align=left;spacingLeft=18;shadow=0;strokeWidth=2;" value="✓  Artifact evidence" vertex="1">
+          <mxGeometry height="52" width="220" x="690" y="495" as="geometry" />
+        </mxCell>
+        <mxCell id="en-approved" parent="1" style="rounded=1;arcSize=18;whiteSpace=wrap;html=1;fillColor=#FFF4E9;strokeColor=#222222;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=14;shadow=0;" value="●  APPROVED&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;&lt;b&gt;Release v41&lt;/b&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="220" x="690" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="en-panel-c" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;fillOpacity=95;strokeColor=#222222;strokeWidth=3;" value="" vertex="1">
+          <mxGeometry height="530" width="555" x="990" y="153" as="geometry" />
+        </mxCell>
+        <mxCell id="en-panel-c-accent" parent="1" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fillColor=#222222;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="5" width="82" x="1015" y="173" as="geometry" />
+        </mxCell>
+        <mxCell id="en-panel-c-title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=21;" value="03  PRODUCTION RUNTIME" vertex="1">
+          <mxGeometry height="36" width="350" x="1009" y="185" as="geometry" />
+        </mxCell>
+        <mxCell id="en-panel-c-sub" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;fontColor=#222222;fontFamily=Helvetica;fontStyle=1;fontSize=11;" value="CODEX CLI" vertex="1">
+          <mxGeometry height="28" width="120" x="1385" y="189" as="geometry" />
+        </mxCell>
+        <mxCell id="en-deploy" parent="1" style="rounded=1;arcSize=16;whiteSpace=wrap;html=1;fillColor=#F3F3FA;strokeColor=#222222;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=15;spacing=8;shadow=0;" value="&lt;b&gt;Deploy &amp; Load&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;v41 ZIP  →  codex-instruct.py  →  Codex config&lt;/font&gt;" vertex="1">
+          <mxGeometry height="72" width="490" x="1020" y="237" as="geometry" />
+        </mxCell>
+        <mxCell id="en-runtime-1" parent="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontSize=13;shadow=0;strokeWidth=2;" value="01&lt;br&gt;&lt;b&gt;Normalization&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;names · URLs · identities&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="150" x="1020" y="347" as="geometry" />
+        </mxCell>
+        <mxCell id="en-runtime-2" parent="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontSize=13;shadow=0;strokeWidth=2;" value="02&lt;br&gt;&lt;b&gt;Semantic Dispatch&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;full verb chains&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="150" x="1190" y="347" as="geometry" />
+        </mxCell>
+        <mxCell id="en-runtime-3" parent="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontSize=13;shadow=0;strokeWidth=2;" value="03&lt;br&gt;&lt;b&gt;Intent Routing&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;software · safety · agent&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="150" x="1360" y="347" as="geometry" />
+        </mxCell>
+        <mxCell id="en-runtime-4" parent="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontSize=13;shadow=0;strokeWidth=2;" value="04&lt;br&gt;&lt;b&gt;State Continuity&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;reuse · progress · recovery&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="185" x="1051" y="472" as="geometry" />
+        </mxCell>
+        <mxCell id="en-runtime-5" parent="1" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#222222;fontColor=#111111;fontFamily=Helvetica;fontSize=13;shadow=0;strokeWidth=2;" value="05&lt;br&gt;&lt;b&gt;Artifact Verification&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;files · paths · signatures&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="185" x="1296" y="472" as="geometry" />
+        </mxCell>
+        <mxCell id="en-engine" parent="1" style="rounded=1;arcSize=18;whiteSpace=wrap;html=1;fillColor=#ECF8EC;strokeColor=#111111;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=17;shadow=0;" value="&lt;b&gt;gpt-5.6-sol&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;Execute with v41&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="185" x="1050" y="587" as="geometry" />
+        </mxCell>
+        <mxCell id="en-output" parent="1" style="rounded=1;arcSize=18;whiteSpace=wrap;html=1;fillColor=#FFF4E9;strokeColor=#222222;strokeWidth=2;fontColor=#111111;fontFamily=Helvetica;fontSize=15;shadow=0;" value="&lt;b&gt;Verifiable Result&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#111111&quot;&gt;steps · code · text · files&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="200" x="1295" y="587" as="geometry" />
+        </mxCell>
+        <mxCell id="en-e-input-test" edge="1" parent="1" source="en-input-fail" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" target="en-testbank" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="en-e-test-opt" edge="1" parent="1" source="en-testbank" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" target="en-optimize" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="en-e-opt-reg" edge="1" parent="1" source="en-optimize" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" target="en-regression" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="en-e-reg-candidate" edge="1" parent="1" source="en-regression" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=3;endArrow=block;endFill=1;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=12;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="en-candidate" value="PASS">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="630.05" y="575" />
+              <mxPoint x="630.05" y="267" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="en-e-cand-g1" edge="1" parent="1" source="en-candidate" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" target="en-gate-1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="en-e-g1-g2" edge="1" parent="1" source="en-gate-1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" target="en-gate-2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="en-e-g2-g3" edge="1" parent="1" source="en-gate-2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" target="en-gate-3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="en-e-g3-app" edge="1" parent="1" source="en-gate-3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" target="en-approved" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="en-e-app-deploy" edge="1" parent="1" source="en-approved" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=3;endArrow=block;endFill=1;fontColor=#111111;fontFamily=Helvetica;fontStyle=1;fontSize=12;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="en-deploy" value="RELEASE">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="970" y="610" />
+              <mxPoint x="970" y="273" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="en-e-deploy-r1" edge="1" parent="1" source="en-deploy" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" target="en-runtime-1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="en-e-r1-r2" edge="1" parent="1" source="en-runtime-1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" target="en-runtime-2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="en-e-r2-r3" edge="1" parent="1" source="en-runtime-2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" target="en-runtime-3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="en-e-r3-r4" edge="1" parent="1" source="en-runtime-3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="en-runtime-4" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1435" y="447" />
+              <mxPoint x="1143.5" y="447" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="en-e-r4-r5" edge="1" parent="1" source="en-runtime-4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" target="en-runtime-5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="en-e-r5-engine" edge="1" parent="1" source="en-runtime-5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=2;endArrow=block;endFill=1;" target="en-engine" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1397" y="567" />
+              <mxPoint x="1143" y="567" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="en-e-engine-output" edge="1" parent="1" source="en-engine" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#222222;strokeWidth=3;endArrow=block;endFill=1;" target="en-output" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
