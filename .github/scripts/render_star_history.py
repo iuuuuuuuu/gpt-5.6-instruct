@@ -19,6 +19,14 @@ DEFAULT_BACKEND_URL = "http://127.0.0.1:8080"
 DEFAULT_REPOSITORY = "mdx-tom/gpt-5.6-instruct"
 THEMES = ("light", "dark")
 
+# The local backend cools a rate-limited token down for 15 minutes, far longer
+# than a job can wait, so retrying the live render is futile; a couple of tries
+# still absorb a transient warm-up blip before failing over to the cached pair.
+LOCAL_RENDER_ATTEMPTS = 2
+# The fallback fetches the last-deployed pair from the Pages CDN, where retries
+# usefully ride out short-lived network hiccups.
+FALLBACK_RENDER_ATTEMPTS = 4
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
@@ -89,6 +97,19 @@ def chart_url(backend_url: str, repository: str, theme: str) -> str:
 
 def fallback_chart_url(base_url: str, theme: str) -> str:
     return f"{base_url}/star-history-{theme}.svg"
+
+
+def emit_github_warning(message: str) -> None:
+    """Surface a degraded refresh as a run annotation, not just buried stderr.
+
+    A green job that silently serves a stale chart hides the fact that the live
+    Star History render keeps hitting GitHub rate limits; the annotation makes
+    the degraded state visible so maintainers can rotate or add tokens.
+    """
+    if os.environ.get("GITHUB_ACTIONS") != "true":
+        return
+    single_line = message.replace("\r", " ").replace("\n", " ")
+    print(f"::warning title=Star History::{single_line}")
 
 
 def download_svg(url: str, attempts: int = 4) -> bytes:
@@ -179,10 +200,11 @@ def fetch_chart_pair(
     *,
     repository: str,
     url_for_theme,
+    attempts: int,
 ) -> Dict[str, bytes]:
     charts = {}
     for theme in THEMES:
-        content = download_svg(url_for_theme(theme))
+        content = download_svg(url_for_theme(theme), attempts=attempts)
         validate_svg(content, repository, theme)
         charts[theme] = content
     return charts
@@ -204,22 +226,25 @@ def main() -> int:
                     repository,
                     theme,
                 ),
+                attempts=LOCAL_RENDER_ATTEMPTS,
             )
         except (RuntimeError, OSError, ValueError, ET.ParseError) as local_error:
             if not args.fallback_base_url:
                 raise
             fallback_base_url = validate_fallback_base_url(args.fallback_base_url)
-            print(
-                "[warning] Local Star History refresh failed; "
-                f"reusing the last deployed chart pair: {local_error}",
-                file=sys.stderr,
+            warning = (
+                "Local Star History refresh failed; reusing the last deployed "
+                f"chart pair: {local_error}"
             )
+            print(f"[warning] {warning}", file=sys.stderr)
+            emit_github_warning(warning)
             charts = fetch_chart_pair(
                 repository=repository,
                 url_for_theme=lambda theme: fallback_chart_url(
                     fallback_base_url,
                     theme,
                 ),
+                attempts=FALLBACK_RENDER_ATTEMPTS,
             )
 
         # Write only after both themes validate, preventing a mixed fresh/stale pair.
