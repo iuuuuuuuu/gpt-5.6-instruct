@@ -224,7 +224,7 @@ gpt-5.6-instruct/
 ├── scripts/*.zip                      # 可复现评测工具
 ├── unit-tests/
 │   ├── test_codex_instruct.py         # 部署与回滚单元测试
-│   └── test_star_history_renderer.py  # Star History 限流回退测试
+│   └── test_star_history.py           # Star History 本地渲染与上游补丁测试
 ├── .github/workflows/test-codex-instruct.yml # Python 3.8/3.13 CI
 └── docs/architecture/                 # 可编辑的 Draw.io 架构图源文件
 ```
@@ -285,4 +285,3 @@ python3 sync-archives.py --check
 | [trailofbits/skills](https://github.com/trailofbits/skills) | 6,192 | [`dwarf-expert`](skill-examples/trailofbits-skills/dwarf-expert/SKILL.md) 及其原始 reference、agent metadata 和 asset | CC-BY-SA-4.0 |
 
 </details>
-

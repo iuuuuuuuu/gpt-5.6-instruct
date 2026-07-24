@@ -50,44 +50,6 @@ class ManagedConfigTests(unittest.TestCase):
             },
         )
 
-    # Reset removes only the managed instruction entry and preserves later CCSwitch settings.
-    def test_reset_preserves_ccswitch_provider_change(self) -> None:
-        temporary_directory, config_path = self.make_config(
-            'model_provider = "custom"\n'
-            'model = "gpt-5.5"\n\n'
-            '[model_providers.custom]\n'
-            'base_url = "https://example.invalid/v1"\n'
-        )
-        self.addCleanup(temporary_directory.cleanup)
-
-        codex_instruct.prepare_deployment_state(
-            config_path,
-            "gpt-5.6-sol-unrestricted-v41.md",
-            "test instructions\n",
-        )
-        codex_instruct.set_model_instructions(
-            config_path,
-            "gpt-5.6-sol-unrestricted-v41.md",
-        )
-
-        # Simulate CCSwitch selecting the official provider after deployment.
-        config_path.write_text(
-            'model_provider = "openai"\n'
-            'model = "gpt-5.5"\n'
-            'model_instructions_file = "./gpt-5.6-sol-unrestricted-v41.md"\n\n'
-            '[features]\nweb_search = true\n',
-            encoding="utf-8",
-        )
-
-        changed, status = codex_instruct.restore_managed_model_instructions(config_path)
-
-        self.assertTrue(changed)
-        self.assertEqual(status, "removed")
-        restored = tomllib.loads(config_path.read_text(encoding="utf-8"))
-        self.assertEqual(restored["model_provider"], "openai")
-        self.assertTrue(restored["features"]["web_search"])
-        self.assertNotIn("model_instructions_file", restored)
-
     # A pre-existing top-level instruction line, including its comment, survives deploy/reset.
     def test_round_trip_restores_previous_instruction_entry(self) -> None:
         original_line = 'model_instructions_file = "./personal-instructions.md" # keep me'
@@ -158,21 +120,8 @@ class ManagedConfigTests(unittest.TestCase):
         self.assertEqual(restored["model_instructions_file"], "./personal.md")
         self.assertNotIn("model_providers", restored)
 
-    # Custom prompt names are recorded so their managed config entry can be removed safely.
-    def test_custom_prompt_filename_is_tracked(self) -> None:
-        temporary_directory, config_path = self.make_config('model = "gpt-5.5"\n')
-        self.addCleanup(temporary_directory.cleanup)
-        filename = "custom-prompt.md"
-
-        codex_instruct.prepare_deployment_state(config_path, filename, "custom instructions\n")
-        codex_instruct.set_model_instructions(config_path, filename)
-        changed, status = codex_instruct.restore_managed_model_instructions(config_path)
-
-        self.assertTrue(changed)
-        self.assertEqual(status, "removed")
-        self.assertNotIn("model_instructions_file", config_path.read_text(encoding="utf-8"))
-
-    # End-to-end reset removes owned artifacts while retaining a later provider selection.
+    # One end-to-end reset covers custom-name ownership, owned-artifact cleanup,
+    # and preservation of provider/feature settings changed after deployment.
     def test_full_reset_removes_state_and_prompt_without_reverting_provider(self) -> None:
         temporary_directory, config_path = self.make_config(
             'model_provider = "custom"\nmodel = "gpt-5.5"\n'
@@ -189,7 +138,10 @@ class ManagedConfigTests(unittest.TestCase):
         # CCSwitch changes provider state while retaining the common instruction entry.
         config_path.write_text(
             'model_provider = "openai"\n'
-            'model_instructions_file = "./custom-prompt.md"\n',
+            'model = "gpt-5.5"\n'
+            'model_instructions_file = "./custom-prompt.md"\n\n'
+            '[features]\n'
+            'web_search = true\n',
             encoding="utf-8",
         )
         with patch("builtins.input", return_value="y"):
@@ -198,6 +150,8 @@ class ManagedConfigTests(unittest.TestCase):
         self.assertEqual(result, 0)
         restored = tomllib.loads(config_path.read_text(encoding="utf-8"))
         self.assertEqual(restored["model_provider"], "openai")
+        self.assertEqual(restored["model"], "gpt-5.5")
+        self.assertTrue(restored["features"]["web_search"])
         self.assertNotIn("model_instructions_file", restored)
         self.assertFalse((codex_home / "custom-prompt.md").exists())
         self.assertFalse(codex_instruct.state_file_path(config_path).exists())

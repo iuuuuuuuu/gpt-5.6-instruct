@@ -7,6 +7,7 @@ on:
   pull_request:
     paths:
       - "codex-instruct.py"
+      - ".github/scripts/patch_star_history_upstream.py"
       - ".github/scripts/render_star_history.py"
       - "unit-tests/**"
       - ".github/workflows/test-codex-instruct.yml"
@@ -15,6 +16,7 @@ on:
       - main
     paths:
       - "codex-instruct.py"
+      - ".github/scripts/patch_star_history_upstream.py"
       - ".github/scripts/render_star_history.py"
       - "unit-tests/**"
       - ".github/workflows/test-codex-instruct.yml"
@@ -48,7 +50,12 @@ jobs:
 
       # Catch syntax/import compatibility problems before running behavioral tests.
       - name: Compile deployment script and tests
-        run: python -m py_compile codex-instruct.py .github/scripts/render_star_history.py unit-tests/*.py
+        run: >-
+          python -m py_compile
+          codex-instruct.py
+          .github/scripts/patch_star_history_upstream.py
+          .github/scripts/render_star_history.py
+          unit-tests/*.py
 
       # Exercise config ownership, safe reset, snapshot recovery, and file-preservation cases.
       - name: Run unit tests

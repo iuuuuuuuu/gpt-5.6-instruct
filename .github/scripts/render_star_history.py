@@ -19,9 +19,9 @@ DEFAULT_BACKEND_URL = "http://127.0.0.1:8080"
 DEFAULT_REPOSITORY = "mdx-tom/gpt-5.6-instruct"
 THEMES = ("light", "dark")
 
-# The local backend cools a rate-limited token down for 15 minutes, far longer
-# than a job can wait, so retrying the live render is futile; a couple of tries
-# still absorb a transient warm-up blip before failing over to the cached pair.
+# One retry lets the local backend rotate to the optional second token. More
+# attempts do not help after every token enters its 15-minute cooldown, so fail
+# over promptly to the last validated chart pair.
 LOCAL_RENDER_ATTEMPTS = 2
 # The fallback fetches the last-deployed pair from the Pages CDN, where retries
 # usefully ride out short-lived network hiccups.

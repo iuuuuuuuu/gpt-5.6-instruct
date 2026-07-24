@@ -224,7 +224,7 @@ gpt-5.6-instruct/
 ├── scripts/*.zip                      # Reproducible evaluation tools
 ├── unit-tests/
 │   ├── test_codex_instruct.py         # Deployment and rollback unit tests
-│   └── test_star_history_renderer.py  # Star History rate-limit fallback test
+│   └── test_star_history.py           # Local renderer and upstream patch tests
 ├── .github/workflows/test-codex-instruct.yml # Python 3.8/3.13 CI
 └── docs/architecture/                 # Editable Draw.io architecture source
 ```
@@ -285,4 +285,3 @@ The referenced upstream Agent Skills and their licenses are listed below:
 | [trailofbits/skills](https://github.com/trailofbits/skills) | 6,192 | [`dwarf-expert`](skill-examples/trailofbits-skills/dwarf-expert/SKILL.md), including its original references, agent metadata, and asset | CC-BY-SA-4.0 |
 
 </details>
-
