@@ -2,13 +2,13 @@
 # The tests use temporary CODEX_HOME directories and never touch a runner user configuration.
 name: Test codex-instruct
 
-# Run when deployment behavior, Star History fallback behavior, tests, or this workflow changes.
+# Run when deployment behavior, Star History data/render behavior, tests, or this workflow changes.
 on:
   pull_request:
     paths:
       - "codex-instruct.py"
-      - ".github/scripts/patch_star_history_upstream.py"
-      - ".github/scripts/render_star_history.py"
+      - ".github/scripts/star_history.py"
+      - ".github/data/star-history-data.json"
       - "unit-tests/**"
       - ".github/workflows/test-codex-instruct.yml"
   push:
@@ -16,8 +16,8 @@ on:
       - main
     paths:
       - "codex-instruct.py"
-      - ".github/scripts/patch_star_history_upstream.py"
-      - ".github/scripts/render_star_history.py"
+      - ".github/scripts/star_history.py"
+      - ".github/data/star-history-data.json"
       - "unit-tests/**"
       - ".github/workflows/test-codex-instruct.yml"
   workflow_dispatch:
@@ -37,10 +37,10 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -53,8 +53,7 @@ jobs:
         run: >-
           python -m py_compile
           codex-instruct.py
-          .github/scripts/patch_star_history_upstream.py
-          .github/scripts/render_star_history.py
+          .github/scripts/star_history.py
           unit-tests/*.py
 
       # Exercise config ownership, safe reset, snapshot recovery, and file-preservation cases.

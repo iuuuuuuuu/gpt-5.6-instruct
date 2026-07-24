@@ -2,11 +2,14 @@ from __future__ import annotations
 
 import importlib.util
 import io
+import json
 import os
 import tempfile
 import threading
 import unittest
+import urllib.error
 from contextlib import contextmanager, redirect_stdout
+from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from unittest.mock import patch
@@ -23,13 +26,9 @@ def load_project_module(name: str, path: Path):
     return module
 
 
-render_star_history = load_project_module(
-    "render_star_history",
-    PROJECT_ROOT / ".github" / "scripts" / "render_star_history.py",
-)
-patch_upstream = load_project_module(
-    "patch_star_history_upstream",
-    PROJECT_ROOT / ".github" / "scripts" / "patch_star_history_upstream.py",
+star_history = load_project_module(
+    "star_history",
+    PROJECT_ROOT / ".github" / "scripts" / "star_history.py",
 )
 
 
@@ -42,6 +41,19 @@ def make_svg(theme: str) -> bytes:
         "<desc>Star History GitHub Stars mdx-tom/gpt-5.6-instruct xkcdify"
         f"{padding}</desc></svg>"
     ).encode("utf-8")
+
+
+def make_data(last_count: int = 100):
+    return {
+        "schema_version": 1,
+        "repository": "mdx-tom/gpt-5.6-instruct",
+        "updated_at": "2026-07-02T00:00:00Z",
+        "logo_url": "data:image/png;base64,AA==",
+        "star_records": [
+            {"date": "2026/7/1 0:0:0", "count": 1},
+            {"date": "2026/7/2 0:0:0", "count": last_count},
+        ],
+    }
 
 
 @contextmanager
@@ -62,7 +74,7 @@ class FailingBackendHandler(BaseHTTPRequestHandler):
         self.send_response(503)
         self.send_header("Content-Type", "text/plain")
         self.end_headers()
-        self.wfile.write(b"rate limited")
+        self.wfile.write(b"renderer unavailable")
 
     def log_message(self, format: str, *args) -> None:
         pass
@@ -82,56 +94,27 @@ class DeployedChartHandler(BaseHTTPRequestHandler):
         pass
 
 
-TOKEN_SOURCE = r"""export const initTokenFromEnv = async () => {
-  const tokenList = envTokenString.split(/\r?\n/);
-      await api.getRepoStargazersCount("star-history/star-history", token);
-};
-"""
-
-API_SOURCE = """export async function getRepoStarRecords() {
-        const patchRes = await getRepoStargazers(repo, token)
-        const resArray = await Promise.all(
-            requestPages.map((page) => {
-                return getRepoStargazers(repo, token, page)
-            })
-        )
-        return resArray
-}
-"""
-
-CHART_SOURCE = """export const getRepoData = async () => {
-            const [starRecords, logo] = await Promise.all([
-                api.getRepoStarRecords(repo, token, maxRequestAmount),
-                api.getRepoLogoUrl(repo, token),
-            ])
-            return { starRecords, logo }
-}
-"""
-
-
 def write_upstream_fixture(root: Path) -> None:
-    files = {
-        patch_upstream.TOKEN_PATH: TOKEN_SOURCE,
-        patch_upstream.API_PATH: API_SOURCE,
-        patch_upstream.CHART_PATH: CHART_SOURCE,
-    }
-    for relative_path, content in files.items():
-        destination = root / relative_path
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        destination.write_text(content, encoding="utf-8")
+    destination = root / star_history.MAIN_PATH
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    destination.write_text(
+        star_history.STARTUP_ORIGINAL + "\n  return true;\n};\n",
+        encoding="utf-8",
+    )
 
 
 class StarHistoryRendererTests(unittest.TestCase):
     # One degraded render covers the complete fallback pair and the Actions
     # annotation; the same warning helper must stay silent during local runs.
-    def test_rate_limit_fallback_and_annotation_policy(self) -> None:
+    def test_renderer_fallback_and_annotation_policy(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
             output_dir = Path(temporary_directory)
             with serve(FailingBackendHandler) as backend_url, serve(
                 DeployedChartHandler
             ) as fallback_url:
                 argv = [
-                    "render_star_history.py",
+                    "star_history.py",
+                    "render",
                     "--backend-url",
                     backend_url,
                     "--fallback-base-url",
@@ -141,13 +124,13 @@ class StarHistoryRendererTests(unittest.TestCase):
                 ]
                 buffer = io.StringIO()
                 with patch("sys.argv", argv), patch.object(
-                    render_star_history.time,
+                    star_history.time,
                     "sleep",
                     return_value=None,
                 ), patch.dict(os.environ, {"GITHUB_ACTIONS": "true"}), redirect_stdout(
                     buffer
                 ):
-                    self.assertEqual(render_star_history.main(), 0)
+                    self.assertEqual(star_history.main(), 0)
 
             self.assertEqual(
                 (output_dir / "star-history-light.svg").read_bytes(),
@@ -161,69 +144,184 @@ class StarHistoryRendererTests(unittest.TestCase):
 
         local_buffer = io.StringIO()
         with patch.dict(os.environ, {}, clear=True), redirect_stdout(local_buffer):
-            render_star_history.emit_github_warning("local check")
+            star_history.emit_github_warning("local check")
         self.assertEqual(local_buffer.getvalue(), "")
 
 
-class StarHistoryUpstreamPatchTests(unittest.TestCase):
-    # The production pipeline may use GitHub APIs and this project's Pages
-    # cache, but a hosted Star History endpoint must never become its default.
-    def test_pipeline_contains_no_hosted_star_history_domain(self) -> None:
-        pipeline_files = (
-            PROJECT_ROOT / ".github" / "scripts" / "patch_star_history_upstream.py",
-            PROJECT_ROOT / ".github" / "scripts" / "render_star_history.py",
-            PROJECT_ROOT / ".github" / "workflows" / "sync-star-history.yml",
+class StarHistoryDataTests(unittest.TestCase):
+    # The committed bootstrap cache is the first-run source of truth, so schema
+    # or repository drift must fail CI before the Pages workflow consumes it.
+    def test_repository_seed_passes_schema_validation(self) -> None:
+        seed_file = PROJECT_ROOT / ".github" / "data" / "star-history-data.json"
+        payload = star_history.read_json_file(seed_file)
+        validated = star_history.validate_data(
+            payload,
+            "mdx-tom/gpt-5.6-instruct",
         )
-        for path in pipeline_files:
-            with self.subTest(path=path):
-                self.assertNotIn(
-                    "star-history.com",
-                    path.read_text(encoding="utf-8").lower(),
+        self.assertGreaterEqual(len(validated["star_records"]), 2)
+        self.assertGreater(validated["star_records"][-1]["count"], 0)
+
+    # The updater must query only repository metadata for the current total;
+    # listing individual stargazers would recreate the access/rate-limit failure.
+    def test_metadata_request_does_not_list_stargazers(self) -> None:
+        class FakeResponse:
+            def __enter__(self):
+                return self
+
+            def __exit__(self, exc_type, exc, traceback):
+                return False
+
+            def read(self) -> bytes:
+                return b'{"stargazers_count": 2841}'
+
+        with patch.object(
+            star_history.urllib.request,
+            "urlopen",
+            return_value=FakeResponse(),
+        ) as urlopen:
+            count = star_history.fetch_repository_star_count(
+                "mdx-tom/gpt-5.6-instruct",
+                "test-token",
+            )
+
+        request = urlopen.call_args.args[0]
+        self.assertEqual(
+            request.full_url,
+            "https://api.github.com/repos/mdx-tom/gpt-5.6-instruct",
+        )
+        self.assertNotIn("/stargazers", request.full_url)
+        self.assertEqual(count, 2841)
+
+    # Repeated 12-hour runs with an unchanged count must be byte-stable; a
+    # changed same-day count replaces the point and a new UTC day appends one.
+    def test_current_record_coalesces_same_day_and_appends_next_day(self) -> None:
+        original = make_data(last_count=100)
+        unchanged = star_history.update_current_record(
+            original,
+            repository="mdx-tom/gpt-5.6-instruct",
+            star_count=100,
+            current_time=datetime(2026, 7, 2, 12, tzinfo=timezone.utc),
+        )
+        self.assertEqual(unchanged, original)
+
+        same_day = star_history.update_current_record(
+            original,
+            repository="mdx-tom/gpt-5.6-instruct",
+            star_count=101,
+            current_time=datetime(2026, 7, 2, 12, tzinfo=timezone.utc),
+        )
+        self.assertEqual(len(same_day["star_records"]), 2)
+        self.assertEqual(same_day["star_records"][-1]["count"], 101)
+        self.assertEqual(same_day["star_records"][-1]["date"], "2026/7/2 12:0:0")
+
+        next_day = star_history.update_current_record(
+            same_day,
+            repository="mdx-tom/gpt-5.6-instruct",
+            star_count=102,
+            current_time=datetime(2026, 7, 3, 1, 2, 3, tzinfo=timezone.utc),
+        )
+        self.assertEqual(len(next_day["star_records"]), 3)
+        self.assertEqual(next_day["star_records"][-1], {
+            "date": "2026/7/3 1:2:3",
+            "count": 102,
+        })
+
+    # The deployed Pages cache carries history between commit-free runs. Only a
+    # first-run 404 may use the seed; transient errors must preserve live data.
+    def test_deployed_data_preferred_with_first_run_seed_only(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            seed_file = Path(temporary_directory) / "seed.json"
+            seed_file.write_text(json.dumps(make_data(100)), encoding="utf-8")
+            deployed = make_data(101)
+
+            with patch.object(
+                star_history,
+                "download_json",
+                return_value=deployed,
+            ):
+                payload, source = star_history.load_best_data(
+                    repository="mdx-tom/gpt-5.6-instruct",
+                    seed_file=seed_file,
+                    deployed_url="https://mdx-tom.github.io/example/data.json",
+                )
+            self.assertEqual(payload["star_records"][-1]["count"], 101)
+            self.assertEqual(source, "deployed Pages data")
+
+            with patch.object(
+                star_history, "download_json", side_effect=urllib.error.HTTPError(
+                    "https://mdx-tom.github.io/example/data.json",
+                    404,
+                    "Not Found",
+                    None,
+                    io.BytesIO(b""),
+                )
+            ):
+                payload, source = star_history.load_best_data(
+                    repository="mdx-tom/gpt-5.6-instruct",
+                    seed_file=seed_file,
+                    deployed_url="https://mdx-tom.github.io/example/data.json",
+                )
+            self.assertEqual(payload["star_records"][-1]["count"], 100)
+            self.assertEqual(source, "repository seed")
+
+            with patch.object(
+                star_history,
+                "download_json",
+                side_effect=urllib.error.URLError("offline"),
+            ), self.assertRaisesRegex(RuntimeError, "preserving the last deployment"):
+                star_history.load_best_data(
+                    repository="mdx-tom/gpt-5.6-instruct",
+                    seed_file=seed_file,
+                    deployed_url="https://mdx-tom.github.io/example/data.json",
                 )
 
-    # The Actions adaptation must preserve sampled history, eliminate the API
-    # burst, and remain a no-op when setup is repeated.
-    def test_patch_serializes_all_github_api_reads(self) -> None:
+
+class StarHistoryUpstreamPatchTests(unittest.TestCase):
+    # Production may use GitHub repository metadata and this project's Pages
+    # cache, but neither a hosted Star History endpoint nor stargazer listing.
+    def test_pipeline_contains_no_hosted_service_or_stargazer_listing(self) -> None:
+        pipeline_files = (
+            PROJECT_ROOT / ".github" / "scripts" / "star_history.py",
+            PROJECT_ROOT / ".github" / "workflows" / "sync-star-history.yml",
+        )
+        combined = "\n".join(
+            path.read_text(encoding="utf-8").lower() for path in pipeline_files
+        )
+        self.assertNotIn("api.star-history.com", combined)
+        self.assertNotIn("www.star-history.com", combined)
+        self.assertNotIn("/stargazers", combined)
+
+    # The guarded adaptation must seed official cache data, bypass token setup
+    # only for that mode, and remain a no-op when setup is repeated.
+    def test_patch_seeds_local_cache_and_is_idempotent(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
             root = Path(temporary_directory)
             write_upstream_fixture(root)
 
-            changed = patch_upstream.patch_upstream(root)
+            changed = star_history.patch_upstream(root)
 
-            self.assertEqual(
-                changed,
-                [
-                    patch_upstream.TOKEN_PATH,
-                    patch_upstream.API_PATH,
-                    patch_upstream.CHART_PATH,
-                ],
-            )
-            token_source = (root / patch_upstream.TOKEN_PATH).read_text(encoding="utf-8")
-            api_source = (root / patch_upstream.API_PATH).read_text(encoding="utf-8")
-            chart_source = (root / patch_upstream.CHART_PATH).read_text(encoding="utf-8")
-            self.assertIn(".map((token) => token.trim())", token_source)
-            self.assertIn(".filter(Boolean)", token_source)
-            self.assertIn("STAR_HISTORY_TOKEN_TEST_REPO", token_source)
-            self.assertIn("for (const page of requestPages)", api_source)
-            self.assertIn("resArray.push(patchRes)", api_source)
-            self.assertIn("setTimeout(resolve, 500)", api_source)
-            self.assertNotIn("requestPages.map", api_source)
-            self.assertNotIn("const [starRecords, logo] = await Promise.all", chart_source)
-            self.assertEqual(patch_upstream.patch_upstream(root), [])
+            self.assertEqual(changed, [star_history.MAIN_PATH])
+            source = (root / star_history.MAIN_PATH).read_text(encoding="utf-8")
+            self.assertIn("process.env.STAR_HISTORY_DATA_PATH", source)
+            self.assertIn("if (!seedPath) {\n    await initTokenFromEnv();", source)
+            self.assertIn("cache.set(repository", source)
+            self.assertIn("star_records", source)
+            self.assertEqual(star_history.patch_upstream(root), [])
 
-    # A changed upstream implementation must stop the job instead of silently
-    # restoring concurrent requests or producing a partially patched renderer.
+    # A changed upstream startup must stop the job instead of silently skipping
+    # cache seeding and falling back to access-restricted stargazer requests.
     def test_patch_rejects_unexpected_upstream_source(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
             root = Path(temporary_directory)
-            write_upstream_fixture(root)
-            (root / patch_upstream.API_PATH).write_text(
-                "export async function changedUpstream() {}\n",
+            destination = root / star_history.MAIN_PATH
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_text(
+                "const startServer = async () => { changedUpstream(); };\n",
                 encoding="utf-8",
             )
 
             with self.assertRaisesRegex(RuntimeError, "unexpected upstream"):
-                patch_upstream.patch_upstream(root)
+                star_history.patch_upstream(root)
 
 
 if __name__ == "__main__":

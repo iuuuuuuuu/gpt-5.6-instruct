@@ -12,8 +12,8 @@ on:
       - README_EN.md
       - docs/images/**
       - .github/scripts/build_pages_readme.py
-      - .github/scripts/patch_star_history_upstream.py
-      - .github/scripts/render_star_history.py
+      - .github/scripts/star_history.py
+      - .github/data/star-history-data.json
       - .github/workflows/sync-star-history.yml
   schedule:
     - cron: "23 */12 * * *"
@@ -49,11 +49,11 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Check out this repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
 
       # Use the upstream renderer directly instead of the unstable hosted chart endpoint.
       - name: Check out official Star History source
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
         with:
           repository: star-history/star-history
           ref: ${{ env.STAR_HISTORY_SOURCE_REF }}
@@ -61,13 +61,13 @@ jobs:
           persist-credentials: false
 
       - name: Set up pnpm
-        uses: pnpm/action-setup@v5
+        uses: pnpm/action-setup@v6
         with:
           version: 9.15.9
           run_install: false
 
       - name: Set up Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v7
         with:
           node-version: "24"
           cache: pnpm
@@ -89,10 +89,9 @@ jobs:
         id: render
         shell: bash
         env:
-          # The per-run token is fresh; the optional repository PAT is a second
-          # token for the upstream renderer to rotate to when one is limited.
+          # One metadata request reads the current total; individual stargazers
+          # and the hosted Star History service are never queried.
           GITHUB_JOB_TOKEN: ${{ github.token }}
-          GITHUB_PAT_TOKEN: ${{ secrets.STAR_HISTORY_GITHUB_TOKEN }}
         run: |
           set -euo pipefail
 
@@ -101,40 +100,37 @@ jobs:
             exit 1
           fi
 
-          token_file="${RUNNER_TEMP}/star-history-token.env"
+          data_file="${RUNNER_TEMP}/star-history-data.json"
           server_log="${RUNNER_TEMP}/star-history-backend.log"
 
-          # Always stop the local backend and remove the temporary token file,
-          # including when a guarded upstream patch detects source drift.
+          # Always stop the runner-local backend, including after a guarded
+          # upstream patch or render validation failure.
           cleanup() {
             if [[ -n "${server_pid:-}" ]]; then
               kill "${server_pid}" 2>/dev/null || true
               wait "${server_pid}" 2>/dev/null || true
             fi
-            rm -f "${token_file}"
           }
           trap cleanup EXIT
 
-          umask 077
-          # Put the optional PAT first because upstream rotates to the next entry
-          # for its first chart request; duplicate and empty entries are omitted.
-          {
-            if [[ -n "${GITHUB_PAT_TOKEN}" ]]; then
-              printf '%s\n' "${GITHUB_PAT_TOKEN}"
-            fi
-            printf '%s\n' "${GITHUB_JOB_TOKEN}"
-          } | awk 'NF && !seen[$0]++' > "${token_file}"
+          # Extend the previously deployed public date/count series with the
+          # current repository total. The committed seed is used on first deploy
+          # or when the project's own Pages cache is temporarily unavailable.
+          python3 .github/scripts/star_history.py refresh-data \
+            --repository "${STAR_HISTORY_REPOSITORY}" \
+            --seed-file .github/data/star-history-data.json \
+            --deployed-url "${STAR_HISTORY_PAGES_URL}/star-history-data.json" \
+            --output "${data_file}" \
+            --token-env GITHUB_JOB_TOKEN
 
-          # Keep the official chart renderer while serializing its GitHub API
-          # reads for the runner's small token pool; guarded replacements fail
-          # closed if the pinned upstream implementation no longer matches.
-          python3 .github/scripts/patch_star_history_upstream.py \
+          # Preserve the official JSDOM/XYChart/xkcd/SVGO renderer and only seed
+          # its cache with local data. Guarded replacement fails closed on drift.
+          python3 .github/scripts/star_history.py patch-upstream \
             --source-dir "${STAR_HISTORY_SOURCE_DIR}"
 
           (
             cd "${STAR_HISTORY_SOURCE_DIR}/backend"
-            ENVPATH="${token_file}" \
-              STAR_HISTORY_TOKEN_TEST_REPO="${STAR_HISTORY_REPOSITORY}" \
+            STAR_HISTORY_DATA_PATH="${data_file}" \
               pnpm exec tsx main.ts
           ) >"${server_log}" 2>&1 &
           server_pid=$!
@@ -156,7 +152,8 @@ jobs:
           done
 
           mkdir -p "${STAR_HISTORY_SITE_DIR}"
-          if ! python3 .github/scripts/render_star_history.py \
+          cp "${data_file}" "${STAR_HISTORY_SITE_DIR}/star-history-data.json"
+          if ! python3 .github/scripts/star_history.py render \
               --repository "${STAR_HISTORY_REPOSITORY}" \
               --output-dir "${STAR_HISTORY_SITE_DIR}" \
               --fallback-base-url "${STAR_HISTORY_PAGES_URL}"; then
