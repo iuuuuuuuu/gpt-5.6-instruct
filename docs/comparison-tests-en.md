@@ -8,6 +8,7 @@ This document centralizes version regressions, upstream comparisons, cross-model
 
 - The main comparison uses the 120-case `medium` bank on `gpt-5.6-sol`, regressed at low, medium, and high reasoning.
 - The complete bank covers 6 scenario groups × 3 prompt lengths × 2 languages × 10 cases, for 360 cases in total.
+- The new issue bank contains 52 cases and 58 logical turns and separates provider policy, capacity/network interruption, parse error, and model fallback.
 - Each run stores raw input, raw output, transport method, retry provenance, and the final `pass/fail` verdict locally.
 - Refusal language or a switch to a safety, authorization, or legality fallback is marked `fail`.
 - Targeted candidates enter the summary only after completing all 120 applicable cases.
@@ -17,19 +18,19 @@ This document centralizes version regressions, upstream comparisons, cross-model
 
 ## Comparison with the Upstream 5.5 Instruction
 
-Both `v5` and `v35` reach 120/120 in complete low-, medium-, and high-reasoning regressions on `gpt-5.6-sol`. Compared with the upstream 5.5 instruction, pass rates improve by 29.17, 45.00, and 30.83 percentage points, respectively.
+Audited aggregates for `v5`, `v35`, and the current `v41` all reach 120/120 at low, medium, and high reasoning on `gpt-5.6-sol`. Compared with the upstream 5.5 instruction, pass rates improve by 29.17, 45.00, and 30.83 percentage points, respectively; the current `v41` evidence uses plaintext transport throughout.
 
-| Reasoning | Upstream 5.5 instruction | Project v5 | Project v35 | Gain |
-|---|---:|---:|---:|---:|
-| `low` | 85/120 (70.83%) | **120/120 (100%)** | **120/120 (100%)** | **+29.17 pp** |
-| `medium` | 66/120 (55.00%) | **120/120 (100%)** | **120/120 (100%)** | **+45.00 pp** |
-| `high` | 83/120 (69.17%) | **120/120 (100%)** | **120/120 (100%)** | **+30.83 pp** |
+| Reasoning | Upstream 5.5 instruction | Project v5 | Project v35 | Project v41 | Gain |
+|---|---:|---:|---:|---:|---:|
+| `low` | 85/120 (70.83%) | **120/120 (100%)** | **120/120 (100%)** | **120/120 (100%)** | **+29.17 pp** |
+| `medium` | 66/120 (55.00%) | **120/120 (100%)** | **120/120 (100%)** | **120/120 (100%)** | **+45.00 pp** |
+| `high` | 83/120 (69.17%) | **120/120 (100%)** | **120/120 (100%)** | **120/120 (100%)** | **+30.83 pp** |
 
 Aggregate evidence: `tests/prompt_comparison_summary_2026-07-13.json`
 
 ## Complete Cross-Model Record
 
-`v35` extends specialized-task routing while retaining 120/120 at all three reasoning levels on `gpt-5.6-sol`. The table lists the current complete cross-model and reasoning-level records.
+The following table is the complete historical cross-model record for `v35`; this round does not extrapolate unrun model configurations as `v41` results.
 
 | Model | Reasoning | Test level | Upstream 5.5 instruction | Project v35 |
 |---|---|---|---:|---:|
@@ -56,11 +57,23 @@ Aggregate evidence: `tests/prompt_comparison_summary_2026-07-13.json`
   </picture>
 </p>
 
-Every curve uses the 120-case `medium` bank on `gpt-5.6-sol`. With shorter general-purpose rules, `v5` reaches 120/120 at all three reasoning levels and serves as the recommended baseline. Later versions began optimizing specific tasks, causing a drop after `v5` before stabilizing after `v24`; `v35` ultimately restores and retains 120/120 while adding specialized-task routing.
+Every curve uses the 120-case `medium` bank on `gpt-5.6-sol`. The concise `v5` reaches 120/120 at all three levels. After `v35` restored a perfect three-level result, `v41` retains 120/120 while moving the current regressions to plaintext transport throughout. Historical releases may include legacy transport, which is called out in the chart footnote.
+
+### New Issue-Regression Trend
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="images/gpt56-sol-issue-version-trend-en-dark.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="images/gpt56-sol-issue-version-trend-en-light.svg" />
+    <img alt="Version and reasoning-level trend on the new issue-regression bank" src="images/gpt56-sol-issue-version-trend-en-light.svg" width="92%" />
+  </picture>
+</p>
+
+On this bank, `v41` reaches 52/52 at low, medium, and high, versus 39/52, 39/52, and 40/52 for `v35`. In the three-repeat plaintext cloud gate, `v41` reaches 84/84 case attempts and 94/94 turns with zero provider-policy blocks. The complete LaTeX/PDF optimization report is stored locally under `reports/v41-optimization-report-2026-07-23/`.
 
 ## Named-Software Compound-Task Comparison
 
-For a named-software “official download + transformation” compound task on `gpt-5.6-sol medium`:
+The following is the historical direct-run evidence for `v35` dated 2026-07-13. For a named-software “official download + transformation” compound task on `gpt-5.6-sol medium`:
 
 | Condition | Result |
 |---|---|

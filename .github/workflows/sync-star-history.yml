@@ -1,5 +1,8 @@
+# Render the official-style Star History charts locally from upstream source, then publish
+# the bilingual README site through Pages without creating chart-update commits.
 name: Deploy README and Star History
 
+# README/image changes deploy immediately; the schedule refreshes star data every 12 hours.
 on:
   push:
     branches:
@@ -9,17 +12,20 @@ on:
       - README_EN.md
       - docs/images/**
       - .github/scripts/build_pages_readme.py
+      - .github/scripts/render_star_history.py
       - .github/workflows/sync-star-history.yml
   schedule:
     - cron: "23 */12 * * *"
   workflow_dispatch:
 
+# Pages deployment and old deployment-record cleanup require these narrowly scoped permissions.
 permissions:
   contents: read
   deployments: write
   pages: write
   id-token: write
 
+# A newer refresh supersedes an older in-progress render.
 concurrency:
   group: star-history-pages
   cancel-in-progress: true
@@ -41,10 +47,11 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Check out this repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
+      # Use the upstream renderer directly instead of the unstable hosted chart endpoint.
       - name: Check out official Star History source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: star-history/star-history
           ref: ${{ env.STAR_HISTORY_SOURCE_REF }}
@@ -52,15 +59,15 @@ jobs:
           persist-credentials: false
 
       - name: Set up pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v5
         with:
           version: 9.15.9
           run_install: false
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: "20"
+          node-version: "24"
           cache: pnpm
           cache-dependency-path: |
             .star-history-upstream/pnpm-lock.yaml
@@ -80,20 +87,31 @@ jobs:
         id: render
         shell: bash
         env:
-          GITHUB_API_TOKEN: ${{ secrets.STAR_HISTORY_GITHUB_TOKEN }}
+          # The per-run token is fresh; the optional repository PAT is a second
+          # token for the upstream renderer to rotate to when one is limited.
+          GITHUB_JOB_TOKEN: ${{ github.token }}
+          GITHUB_PAT_TOKEN: ${{ secrets.STAR_HISTORY_GITHUB_TOKEN }}
         run: |
           set -euo pipefail
 
-          if [[ -z "${GITHUB_API_TOKEN}" ]]; then
-            echo "::error::Repository secret STAR_HISTORY_GITHUB_TOKEN is required."
+          if [[ -z "${GITHUB_JOB_TOKEN}" ]]; then
+            echo "::error::The workflow GITHUB_TOKEN is unavailable."
             exit 1
           fi
 
           token_file="${RUNNER_TEMP}/star-history-token.env"
           server_log="${RUNNER_TEMP}/star-history-backend.log"
           umask 077
-          printf '%s' "${GITHUB_API_TOKEN}" > "${token_file}"
+          # Put the optional PAT first because upstream rotates to the next entry
+          # for its first chart request; duplicate and empty entries are omitted.
+          {
+            if [[ -n "${GITHUB_PAT_TOKEN}" ]]; then
+              printf '%s\n' "${GITHUB_PAT_TOKEN}"
+            fi
+            printf '%s\n' "${GITHUB_JOB_TOKEN}"
+          } | awk 'NF && !seen[$0]++' > "${token_file}"
 
+          # Make upstream token validation target this repository rather than the upstream repo.
           token_source="${STAR_HISTORY_SOURCE_DIR}/backend/token.ts"
           python3 - "${token_source}" <<'PY'
           from pathlib import Path
@@ -111,6 +129,7 @@ jobs:
           path.write_text(source.replace(original, replacement))
           PY
 
+          # Always stop the local backend and remove the temporary token file.
           cleanup() {
             if [[ -n "${server_pid:-}" ]]; then
               kill "${server_pid}" 2>/dev/null || true
@@ -128,6 +147,7 @@ jobs:
           ) >"${server_log}" 2>&1 &
           server_pid=$!
 
+          # Wait for the runner-local renderer; no api.star-history.com/chart call is used.
           for attempt in {1..60}; do
             if curl --fail --silent http://127.0.0.1:8080/healthz >/dev/null; then
               break
@@ -146,7 +166,8 @@ jobs:
           mkdir -p "${STAR_HISTORY_SITE_DIR}"
           if ! python3 .github/scripts/render_star_history.py \
               --repository "${STAR_HISTORY_REPOSITORY}" \
-              --output-dir "${STAR_HISTORY_SITE_DIR}"; then
+              --output-dir "${STAR_HISTORY_SITE_DIR}" \
+              --fallback-base-url "${STAR_HISTORY_PAGES_URL}"; then
             cat "${server_log}" >&2
             exit 1
           fi
@@ -156,6 +177,7 @@ jobs:
             --pages-url "${STAR_HISTORY_PAGES_URL}" \
             --output-dir "${STAR_HISTORY_SITE_DIR}"
 
+          # Skip Pages deployment when the rendered manifest matches the deployed site.
           current_dir="$(mktemp -d)"
           changed=true
           if curl --fail --silent --location \
@@ -184,6 +206,7 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v5
 
+      # Keep the newest Pages deployment record and remove superseded records from GitHub.
       - name: Delete old GitHub Pages deployment records
         if: ${{ success() && steps.render.outcome == 'success' }}
         uses: actions/github-script@v9

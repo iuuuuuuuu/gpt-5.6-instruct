@@ -1,0 +1,118 @@
+{
+  "policy": "verbatim sparse copies of existing upstream Agent Skill directories",
+  "snapshot_date": "2026-07-21",
+  "sources": [
+    {
+      "commit": "c9a4b9ee8645eb60763eb4eef172f1ecb0a5b3e8",
+      "imported": [
+        {
+          "files": [
+            {
+              "path": "anti-debugging-techniques/ANTI_DEBUG_MATRIX.md",
+              "sha256": "01a03c23b377af4bbd4af2d79b5cf3e87f78ba933b5e751e04976b215d9ce1a4"
+            },
+            {
+              "path": "anti-debugging-techniques/SKILL.md",
+              "sha256": "4f26ae837d36e0632e65928132e740f1492fd189d75b69b5064689303a50e10a"
+            }
+          ],
+          "upstream_path": "skills/anti-debugging-techniques",
+          "vendored_path": "yaklang-hack-skills/anti-debugging-techniques"
+        },
+        {
+          "files": [
+            {
+              "path": "code-obfuscation-deobfuscation/SKILL.md",
+              "sha256": "ab19c3ed661da134584696532d16066186177a399f843cd30e5b6c268578aa42"
+            }
+          ],
+          "upstream_path": "skills/code-obfuscation-deobfuscation",
+          "vendored_path": "yaklang-hack-skills/code-obfuscation-deobfuscation"
+        },
+        {
+          "files": [
+            {
+              "path": "symbolic-execution-tools/ANGR_COOKBOOK.md",
+              "sha256": "28462261af9f254f729ee469f8c3aab85417c5c10246a66922c8f18edb0d3cbd"
+            },
+            {
+              "path": "symbolic-execution-tools/SKILL.md",
+              "sha256": "cc2de553d2f1037b5d096e7eb7ec0554b23f3cc5d493daf6a514ee53dfbab75b"
+            }
+          ],
+          "upstream_path": "skills/symbolic-execution-tools",
+          "vendored_path": "yaklang-hack-skills/symbolic-execution-tools"
+        },
+        {
+          "files": [
+            {
+              "path": "vm-and-bytecode-reverse/SKILL.md",
+              "sha256": "4da387769cea8a3c17ba2fa919771c24d122cc52eb58be3e95e666e4916886b1"
+            }
+          ],
+          "upstream_path": "skills/vm-and-bytecode-reverse",
+          "vendored_path": "yaklang-hack-skills/vm-and-bytecode-reverse"
+        },
+        {
+          "files": [
+            {
+              "path": "binary-protection-bypass/PROTECTION_BYPASS_MATRIX.md",
+              "sha256": "4208d7dc74e65bb9db2ff3aa640e09f8d890177b67ad54a2f3bc28fe2f1717fe"
+            },
+            {
+              "path": "binary-protection-bypass/SKILL.md",
+              "sha256": "90765916f7a28235a1eedbdca97213422bf2228e1605cecfbd293e95b93de5b8"
+            }
+          ],
+          "upstream_path": "skills/binary-protection-bypass",
+          "vendored_path": "yaklang-hack-skills/binary-protection-bypass"
+        }
+      ],
+      "license": "MIT",
+      "repo": "yaklang/hack-skills",
+      "slug": "yaklang-hack-skills",
+      "stars": 1415,
+      "url": "https://github.com/yaklang/hack-skills"
+    },
+    {
+      "commit": "cfe5d7b1619e47fb5b38b7e2561dad7e5f1e89af",
+      "imported": [
+        {
+          "files": [
+            {
+              "path": "dwarf-expert/SKILL.md",
+              "sha256": "5947233be70c9d7932f21082f5180dcdac1673eb0b3872e472aaab873217a04b"
+            },
+            {
+              "path": "dwarf-expert/agents/openai.yaml",
+              "sha256": "11a851b1841f3e828e7609045d91e0632cac07dfc008b2740f487cee83a5efd1"
+            },
+            {
+              "path": "dwarf-expert/assets/trail-of-bits-mark.svg",
+              "sha256": "4bf74c789b38dcf6ad762c136b6832363d27ae19fbaa9a18ec18d66ecce6ca05"
+            },
+            {
+              "path": "dwarf-expert/reference/coding.md",
+              "sha256": "dcd6e788785c061cdc519a95a1ab08ad031df53bdc2b057469260af62111d0b7"
+            },
+            {
+              "path": "dwarf-expert/reference/dwarfdump.md",
+              "sha256": "7f2e1009c67c02dd72c5b413b2c6ac3397d9dc98a2cd6f4e7041cfc63e9ff12d"
+            },
+            {
+              "path": "dwarf-expert/reference/readelf.md",
+              "sha256": "83846a1ff1ea66704498433a6f3ac539b1ee33b50c4ab32eff3f9d3927becf95"
+            }
+          ],
+          "upstream_path": "plugins/dwarf-expert/skills/dwarf-expert",
+          "vendored_path": "trailofbits-skills/dwarf-expert"
+        }
+      ],
+      "license": "CC-BY-SA-4.0",
+      "repo": "trailofbits/skills",
+      "slug": "trailofbits-skills",
+      "stars": 6192,
+      "url": "https://github.com/trailofbits/skills"
+    }
+  ]
+}

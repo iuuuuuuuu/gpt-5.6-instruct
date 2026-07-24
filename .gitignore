@@ -14,8 +14,10 @@ AGENTS.md
 
 # 明文提示词包含不适合直接发布到 GitHub 的敏感测试文本；仓库仅提交同名 ZIP，
 # 本地保留 Markdown 源文件，修改后运行 `python3 sync-archives.py` 同步压缩包。
-# v5 版本无敏感内容，可直接提交，因此不加入忽略规则。
-/gpt-5.6-sol-unrestricted-v35.md
+# v5 明文历史版在 historical-versions/ 中提交；v24/v35 源文件保留于
+# reports/prompt_candidates/，根目录只保留 v41 生产源及可选 skills 配套源。
+/gpt-5.6-sol-unrestricted-v41.md
+/gpt-5.6-sol-unrestricted-v41-skills.md
 /examples/gpt-5.6-sol-unrestricted.md
 
 # 测试脚本内含敏感 prompt/判定样本；仓库仅提交每个脚本对应的同名 ZIP。

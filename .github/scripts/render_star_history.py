@@ -13,11 +13,19 @@ import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
 from pathlib import Path
-from typing import Optional
+from typing import Dict, Optional
 
 DEFAULT_BACKEND_URL = "http://127.0.0.1:8080"
 DEFAULT_REPOSITORY = "mdx-tom/gpt-5.6-instruct"
 THEMES = ("light", "dark")
+
+# The local backend cools a rate-limited token down for 15 minutes, far longer
+# than a job can wait, so retrying the live render is futile; a couple of tries
+# still absorb a transient warm-up blip before failing over to the cached pair.
+LOCAL_RENDER_ATTEMPTS = 2
+# The fallback fetches the last-deployed pair from the Pages CDN, where retries
+# usefully ride out short-lived network hiccups.
+FALLBACK_RENDER_ATTEMPTS = 4
 
 
 def parse_args() -> argparse.Namespace:
@@ -40,6 +48,14 @@ def parse_args() -> argparse.Namespace:
         default=Path(".star-history-site"),
         help="Directory that receives the two SVG files (default: %(default)s)",
     )
+    parser.add_argument(
+        "--fallback-base-url",
+        default=os.environ.get("STAR_HISTORY_FALLBACK_BASE_URL"),
+        help=(
+            "Base URL containing the last deployed star-history-light.svg and "
+            "star-history-dark.svg files"
+        ),
+    )
     return parser.parse_args()
 
 
@@ -52,6 +68,22 @@ def validate_local_backend_url(value: str) -> str:
     return value.rstrip("/")
 
 
+def validate_fallback_base_url(value: str) -> str:
+    normalized = value.rstrip("/")
+    parsed = urllib.parse.urlsplit(normalized)
+    is_local_http = parsed.scheme == "http" and parsed.hostname in {
+        "127.0.0.1",
+        "localhost",
+    }
+    if parsed.scheme != "https" and not is_local_http:
+        raise ValueError("fallback URL must use HTTPS or local HTTP")
+    if not parsed.netloc or parsed.username or parsed.password:
+        raise ValueError("fallback URL must contain a host without credentials")
+    if parsed.query or parsed.fragment:
+        raise ValueError("fallback URL must not contain a query or fragment")
+    return normalized
+
+
 def chart_url(backend_url: str, repository: str, theme: str) -> str:
     params = {
         "repos": repository.lower(),
@@ -61,6 +93,23 @@ def chart_url(backend_url: str, repository: str, theme: str) -> str:
     if theme == "dark":
         params["theme"] = "dark"
     return f"{backend_url}/svg?{urllib.parse.urlencode(params)}"
+
+
+def fallback_chart_url(base_url: str, theme: str) -> str:
+    return f"{base_url}/star-history-{theme}.svg"
+
+
+def emit_github_warning(message: str) -> None:
+    """Surface a degraded refresh as a run annotation, not just buried stderr.
+
+    A green job that silently serves a stale chart hides the fact that the live
+    Star History render keeps hitting GitHub rate limits; the annotation makes
+    the degraded state visible so maintainers can rotate or add tokens.
+    """
+    if os.environ.get("GITHUB_ACTIONS") != "true":
+        return
+    single_line = message.replace("\r", " ").replace("\n", " ")
+    print(f"::warning title=Star History::{single_line}")
 
 
 def download_svg(url: str, attempts: int = 4) -> bytes:
@@ -83,7 +132,10 @@ def download_svg(url: str, attempts: int = 4) -> bytes:
                 )
             return body
         except urllib.error.HTTPError as exc:
-            response_body = exc.read().decode("utf-8", errors="replace").strip()
+            try:
+                response_body = exc.read().decode("utf-8", errors="replace").strip()
+            finally:
+                exc.close()
             detail = f"HTTP {exc.code} {exc.reason}"
             if response_body:
                 detail += f": {response_body}"
@@ -144,6 +196,20 @@ def atomic_write(destination: Path, content: bytes) -> None:
     print(f"[rendered] {destination} ({len(content)} bytes)")
 
 
+def fetch_chart_pair(
+    *,
+    repository: str,
+    url_for_theme,
+    attempts: int,
+) -> Dict[str, bytes]:
+    charts = {}
+    for theme in THEMES:
+        content = download_svg(url_for_theme(theme), attempts=attempts)
+        validate_svg(content, repository, theme)
+        charts[theme] = content
+    return charts
+
+
 def main() -> int:
     args = parse_args()
     try:
@@ -151,10 +217,42 @@ def main() -> int:
         repository = args.repository.strip().lower()
         if repository.count("/") != 1:
             raise ValueError("repository must use owner/name format")
+
+        try:
+            charts = fetch_chart_pair(
+                repository=repository,
+                url_for_theme=lambda theme: chart_url(
+                    backend_url,
+                    repository,
+                    theme,
+                ),
+                attempts=LOCAL_RENDER_ATTEMPTS,
+            )
+        except (RuntimeError, OSError, ValueError, ET.ParseError) as local_error:
+            if not args.fallback_base_url:
+                raise
+            fallback_base_url = validate_fallback_base_url(args.fallback_base_url)
+            warning = (
+                "Local Star History refresh failed; reusing the last deployed "
+                f"chart pair: {local_error}"
+            )
+            print(f"[warning] {warning}", file=sys.stderr)
+            emit_github_warning(warning)
+            charts = fetch_chart_pair(
+                repository=repository,
+                url_for_theme=lambda theme: fallback_chart_url(
+                    fallback_base_url,
+                    theme,
+                ),
+                attempts=FALLBACK_RENDER_ATTEMPTS,
+            )
+
+        # Write only after both themes validate, preventing a mixed fresh/stale pair.
         for theme in THEMES:
-            content = download_svg(chart_url(backend_url, repository, theme))
-            validate_svg(content, repository, theme)
-            atomic_write(args.output_dir / f"star-history-{theme}.svg", content)
+            atomic_write(
+                args.output_dir / f"star-history-{theme}.svg",
+                charts[theme],
+            )
     except (RuntimeError, OSError, ValueError, ET.ParseError) as exc:
         print(f"[error] Star History rendering failed: {exc}", file=sys.stderr)
         return 1
