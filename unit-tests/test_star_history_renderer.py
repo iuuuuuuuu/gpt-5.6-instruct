@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import importlib.util
+import io
+import os
 import tempfile
 import threading
 import unittest
-from contextlib import contextmanager
+from contextlib import contextmanager, redirect_stdout
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from unittest.mock import patch
@@ -102,6 +104,65 @@ class StarHistoryRendererTests(unittest.TestCase):
                 (output_dir / "star-history-dark.svg").read_bytes(),
                 make_svg("dark"),
             )
+
+    # A degraded refresh under Actions must surface a run annotation so a green
+    # job never silently keeps serving a stale chart.
+    def test_rate_limit_emits_github_warning_annotation(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            output_dir = Path(temporary_directory)
+            with serve(FailingBackendHandler) as backend_url, serve(
+                DeployedChartHandler
+            ) as fallback_url:
+                argv = [
+                    "render_star_history.py",
+                    "--backend-url",
+                    backend_url,
+                    "--fallback-base-url",
+                    fallback_url,
+                    "--output-dir",
+                    str(output_dir),
+                ]
+                buffer = io.StringIO()
+                with patch("sys.argv", argv), patch.object(
+                    render_star_history.time,
+                    "sleep",
+                    return_value=None,
+                ), patch.dict(os.environ, {"GITHUB_ACTIONS": "true"}), redirect_stdout(
+                    buffer
+                ):
+                    self.assertEqual(render_star_history.main(), 0)
+
+            self.assertIn("::warning title=Star History::", buffer.getvalue())
+
+    # Outside Actions the annotation is suppressed to keep local output clean.
+    def test_rate_limit_skips_annotation_outside_actions(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            output_dir = Path(temporary_directory)
+            with serve(FailingBackendHandler) as backend_url, serve(
+                DeployedChartHandler
+            ) as fallback_url:
+                argv = [
+                    "render_star_history.py",
+                    "--backend-url",
+                    backend_url,
+                    "--fallback-base-url",
+                    fallback_url,
+                    "--output-dir",
+                    str(output_dir),
+                ]
+                buffer = io.StringIO()
+                environment = dict(os.environ)
+                environment.pop("GITHUB_ACTIONS", None)
+                with patch("sys.argv", argv), patch.object(
+                    render_star_history.time,
+                    "sleep",
+                    return_value=None,
+                ), patch.dict(os.environ, environment, clear=True), redirect_stdout(
+                    buffer
+                ):
+                    self.assertEqual(render_star_history.main(), 0)
+
+            self.assertNotIn("::warning", buffer.getvalue())
 
 
 if __name__ == "__main__":
